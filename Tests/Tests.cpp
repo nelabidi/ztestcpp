@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 int main(int argc, char* argv[])
 {
     cout << "zTest Framework for c++" << endl;

@@ -1,6 +1,9 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+zTestC++, C++ Testing Framework.
+
+#TODO:
+- Update this readme!
 
 ### What is this repository for? ###
 
@@ -23,7 +26,3 @@ This README would normally document whatever steps are necessary to get your app
 * Code review
 * Other guidelines
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
