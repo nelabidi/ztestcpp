@@ -1,0 +1,24 @@
+{
+  "name": "modjs",
+  "version": "1.0.0",
+  "description": "Modular Javascript using SpiderMonkey",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://nelabidi@bitbucket.org/nelabidi/modjs.git"
+  },
+  "author": "Naoufel El Abidi",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/nelabidi/modjs#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-msbuild": "^0.3.4"
+  }
+}

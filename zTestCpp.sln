@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zTestCpp", "zTestCpp\zTestCpp.vcxproj", "{84FC0750-184B-49CA-9E0C-0834EF81C1BB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{08D3FE5D-D625-492A-B302-98A65AB72DDA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{84FC0750-184B-49CA-9E0C-0834EF81C1BB} = {84FC0750-184B-49CA-9E0C-0834EF81C1BB}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84FC0750-184B-49CA-9E0C-0834EF81C1BB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{84FC0750-184B-49CA-9E0C-0834EF81C1BB}.Debug|Win32.Build.0 = Debug|Win32
+		{84FC0750-184B-49CA-9E0C-0834EF81C1BB}.Release|Win32.ActiveCfg = Release|Win32
+		{84FC0750-184B-49CA-9E0C-0834EF81C1BB}.Release|Win32.Build.0 = Release|Win32
+		{08D3FE5D-D625-492A-B302-98A65AB72DDA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{08D3FE5D-D625-492A-B302-98A65AB72DDA}.Debug|Win32.Build.0 = Debug|Win32
+		{08D3FE5D-D625-492A-B302-98A65AB72DDA}.Release|Win32.ActiveCfg = Release|Win32
+		{08D3FE5D-D625-492A-B302-98A65AB72DDA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
