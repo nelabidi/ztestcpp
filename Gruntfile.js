@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 			src: ['zTestCpp.sln'],
             options: {
                 projectConfiguration: 'Debug',
-                targets: ['zTestCpp'],
+                targets: ['Tests'],
                 version: 12.0,
                 maxCpuCount: 4,
                 buildParameters: {
