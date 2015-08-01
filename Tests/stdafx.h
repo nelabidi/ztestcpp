@@ -1,15 +1,35 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
+//////////////////////////////////////////////////////////////////////////
 //
+// PROJECT:
+// FILE:  stdafx.h
+// PURPOSE: pre-recompiled headers
+// DATE: 2015/07/31
+// NOTES:
+//
+//////////////////////////////////////////////////////////////////////////
+
+#ifndef stdafx_h__
+#define stdafx_h__
 
 #pragma once
 
+#include <stdlib.h>
 #include <stdio.h>
-#include <tchar.h>
-
-
 
 #include <iostream>
+
+#include "self_test.h"
+
+
+
+
+#endif // stdafx_h__
+
+
+
+
+
+
+
 
 

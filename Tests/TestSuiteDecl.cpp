@@ -1,11 +1,13 @@
 #include "stdafx.h"
 
-
-
 #include <ztestcpp.h>
+#include <iostream>
+
+
 
 namespace {
 
+using namespace std;
 
 describe("TestSuite 1")
 {

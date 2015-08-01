@@ -15,19 +15,29 @@
 
 #include <string>
 #include <map>
-//#include <set>
-//#include <list>
 #include <vector>
 #include <sstream>
 
 
+//#define ENABLE_LOGING
+
+#ifdef ENABLE_LOGING
 #include <iostream>
 using namespace std;
+#define LOG(msg)  cout << msg <<endl;
+#else
+#define LOG(msg)
+#endif // ENABLE_LOGING
+
+
+
 
 #define XCONCAT_I(a,b) a ## b
 #define XCONCAT(a,b) XCONCAT_I(a,b)
 #define GENERATE_UNIQUE_ID(x)  XCONCAT(x,XCONCAT(_,__LINE__))
 
+
+#define ZTEST_VERIOSN  "1.0.0"
 
 namespace ztest {
 //forward declaration
@@ -46,7 +56,8 @@ struct  TestCaseInfo
 
 struct TestCaseFilter
 {
-    virtual bool filter(TestCaseInfo& testCaseInfo) = 0;
+    virtual bool filterTestCase(TestCaseInfo& testCaseInfo) = 0;
+    virtual bool filterTestSuite(std::string& testSuiteName) = 0;
 };
 
 
@@ -62,6 +73,8 @@ struct TestSuiteRunnerBase
     virtual void setTestCaseFilter(TestCaseFilter *filter) = 0;
 };
 
+typedef std::vector<TestSuiteRunnerBase*> TestSuiteRunnerList;
+
 //template<typename testSuite> struct TestSuiteRunner;
 
 template<typename testSuite>
@@ -71,21 +84,22 @@ struct TestSuiteBase
 
     void setUp()
     {
-        cout << "IN >> TestSuiteImpl::setUp" << endl;
+        //cout << >> TestSuiteImpl::setUp" << endl;
+        LOG("-> TestSuiteImpl::setUp");
     }
 
     void tearDown()
     {
-        cout << "IN >> TestSuiteImpl::tearDown" << endl;
+        LOG("-> TestSuiteImpl::tearDown");
     }
 
     void beforeEach()
     {
-        cout << "TestSuiteImpl::beforeEach" << endl;
+        LOG("-> TestSuiteImpl::beforeEach");
     }
     void afterEach()
     {
-        cout << "TestSuiteImpl::afterEach" << endl;
+        LOG("-> TestSuiteImpl::afterEach");
     }
 
     std::string getName()
@@ -113,11 +127,7 @@ struct TestSuiteBase
     }
 
 private:
-
     friend struct TestSuiteRunner < testSuite > ;
-    /*  std::string _name;
-      std::string _file;
-      int         _line;*/
     void setRunner(TestSuiteRunner< testSuite > * runner)
     {
         _runner = runner;
@@ -156,21 +166,33 @@ struct TestSuiteRunner : public TestSuiteRunnerBase
 
     virtual void Run()
     {
-        //TODO: filter and run
-        testSuite * p = &_testSuite; //new testSuite();
-
+        //check if this testSuite is enabled the return from the filter should be true
+        if (!isTestSuiteEnabled())
+            return;
+        //setup
+        testSuite * p = &_testSuite;
         p->setRunner(this);
-
         p->setUp();
 
-        //for each test case run
+        //for each testcase test if enabled and runn it run
         for (int i = 0; i < getTestCasesCount() ; i++)
         {
-            //TODO: filter and run
+            //set current test case
             _currentTestCase = i;
-            MethodPtr ptr =  getTestCases()[i].ptr;
-            (p->*ptr)();
+            //check if enabled
+            if (isTestCaseEnabled(getCurrentTestCase()))
+            {
+                p->beforeEach();
+
+                //TODO: handle execptions/assertions here
+
+                MethodPtr ptr = getTestCases()[i].ptr;
+                (p->*ptr)();
+
+                p->afterEach();
+            }
         }
+        p->tearDown();
     }
 
     virtual int getTestCasesCount()
@@ -242,6 +264,17 @@ private:
         return list;
     }
 
+    bool isTestSuiteEnabled()
+    {
+        return _filter != nullptr ? _filter->filterTestSuite(this->getName()) : true;
+    }
+    bool isTestCaseEnabled(TestCaseInfo& info)
+    {
+        return _filter != nullptr ? _filter->filterTestCase(info) : true;
+    }
+
+
+
     std::string _name;
     std::string _file;
     int         _line;
@@ -264,9 +297,33 @@ struct TestRunner
         {
             suiteRunner *runner = new suiteRunner(name, file, line);
             addRunner(runner);
-            runner->Run();
         }
+    }
+    static void getAllRunners(TestSuiteRunnerList & runners)
+    {
+        runners = getRunners();
+    }
 
+    static void RunAll()
+    {
+        TestSuiteRunnerList& runners = getRunners();
+        for (unsigned int i = 0; i < runners.size(); i++)
+        {
+            runners[i]->Run();
+        }
+    }
+
+    static TestSuiteRunnerBase* findRunner(const char* name)
+    {
+        TestSuiteRunnerList& runners = getRunners();
+        std::string strName(name);
+
+        for (unsigned int i = 0; i < runners.size(); i++)
+        {
+            if(runners[i]->getName() == strName)
+                return runners[i];
+        }
+        return nullptr;
     }
 
 private:
@@ -290,7 +347,7 @@ private:
         static  std::map<std::string, int> runnersMap;
         return runnersMap;
     }
-    static std::vector<TestSuiteRunnerBase*>& getRunners()
+    static TestSuiteRunnerList& getRunners()
     {
         static std::vector<TestSuiteRunnerBase*> runners;
         return runners;
@@ -336,12 +393,12 @@ TESTSUITE_REGISTRATION(GENERATE_UNIQUE_ID(TestSuite), testSuiteName)
 //
 
 #define TESTCASE_REGISTRATION(testCaseId,testCaseName)\
-struct XCONCAT(testCaseId,  registrar) {\
-    XCONCAT(testCaseId , registrar )() \
+struct XCONCAT(testCaseId,  reg) {\
+    XCONCAT(testCaseId , reg )() \
     { \
         ztest::TestSuiteRunner<CURRENT_TESTSUITE>::addTestCase(&CURRENT_TESTSUITE::testCaseId, testCaseName, __FILE__, __LINE__);\
     } \
-} XCONCAT(testCaseId, registrar);\
+} XCONCAT(testCaseId, reg);\
 void testCaseId()
 
 
