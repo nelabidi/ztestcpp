@@ -1,0 +1,31 @@
+//////////////////////////////////////////////////////////////////////////
+//
+// PROJECT:
+// FILE:  Expect.h
+// PURPOSE:
+// DATE: 2015/08/01
+// NOTES:
+//
+//////////////////////////////////////////////////////////////////////////
+
+#ifndef Expect_h__
+#define Expect_h__
+
+
+namespace ztest {
+
+struct Exception : public std::exception
+{
+
+
+};
+
+
+
+}// end namespace ztest
+
+
+
+
+
+#endif // Expect_h__

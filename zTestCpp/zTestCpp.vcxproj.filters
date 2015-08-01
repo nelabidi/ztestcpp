@@ -21,6 +21,12 @@
     <ClInclude Include="ztestcpp.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Expect.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

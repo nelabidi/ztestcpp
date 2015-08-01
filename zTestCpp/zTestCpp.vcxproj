@@ -73,6 +73,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="Expect.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="ztestcpp.h" />
   </ItemGroup>

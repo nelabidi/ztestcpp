@@ -1,24 +1,59 @@
 #include "stdafx.h"
-
-#include <ztestcpp.h>
-#include <iostream>
-
+#include "self_test.h"
 
 
 namespace {
 
 using namespace std;
 
-describe("TestSuite 1")
+describe("A TestSuite")
 {
-    int member;
+    //can declare members/fixtures
+    int member, reset;
 
+    struct MyStruct
+    {
+        int i;
+        float f;
+        void reset()
+        {
+            f = 0.0;
+            i = 0;
+        }
+    };
+    MyStruct *p;
+
+    //with setup
     void setUp()
     {
-        cout << "in setUp: " << getName() << endl;
+        //initialize
+        member = 1;
+        p = new MyStruct();
+    }
+    //with tearDown
+    void tearDown()
+    {
+        delete p;
+
+    }
+    //called beforeEach TestCase
+    void beforeEach()
+    {
+        reset = 0;
+        p->reset();
     }
 
+    void afterEach()
+    {
+        //cleanup
+    }
+    //can declare a function to be used in a test case
     void doSomething()
+    {
+        //check or do something here
+    }
+    //this is a test case
+    it("contains a test case")
     {
 
     }

@@ -17,7 +17,19 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <exception>
 
+
+#ifdef _WIN32
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+
+#endif // _WIN32
+
+#include "Console.h"
+#include "Expect.h"
 
 //#define ENABLE_LOGING
 
@@ -56,8 +68,8 @@ struct  TestCaseInfo
 
 struct TestCaseFilter
 {
-    virtual bool filterTestCase(TestCaseInfo& testCaseInfo) = 0;
-    virtual bool filterTestSuite(std::string& testSuiteName) = 0;
+    virtual bool filterTestCase(const TestCaseInfo& testCaseInfo) = 0;
+    virtual bool filterTestSuite(const std::string& testSuiteName) = 0;
 };
 
 
@@ -268,7 +280,7 @@ private:
     {
         return _filter != nullptr ? _filter->filterTestSuite(this->getName()) : true;
     }
-    bool isTestCaseEnabled(TestCaseInfo& info)
+    bool isTestCaseEnabled(const TestCaseInfo& info)
     {
         return _filter != nullptr ? _filter->filterTestCase(info) : true;
     }
@@ -381,7 +393,7 @@ struct TestCaseRegistry
 
 #define TESTSUITE_REGISTRATION(testSuiteId,testSuiteName)\
 struct testSuiteId;\
-static ztest::TestSuiteRegistrar<testSuiteId> TestSuiteRegistrar(testSuiteName, __FILE__, __LINE__);\
+static ztest::TestSuiteRegistrar<testSuiteId> GENERATE_UNIQUE_ID(TestSuiteRegistrar)(testSuiteName, __FILE__, __LINE__);\
 struct testSuiteId : public ztest::TestSuiteBase<testSuiteId>
 
 // specs/describe macros
