@@ -1,28 +1,14 @@
-# README #
+zTestCpp, *C++ Testing Framework*.
+=====================================
+****** 
+[![Build Status](http://status.elabidi.com/job/zTestCpp/badge/icon)](http://status.elabidi.com/job/zTestCpp/)
 
-zTestC++, C++ Testing Framework.
 
-#TODO:
-- Update this readme!
 
-### What is this repository for? ###
-
+### TODO: ###
+* Update this readme!
+* Add documentation.
 * Quick summary
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
+* How to use it, examples,  website..etc
+* Other guidelines.
