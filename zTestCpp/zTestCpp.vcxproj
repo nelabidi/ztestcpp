@@ -74,8 +74,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="Expect.h" />
+    <ClInclude Include="matchers\Matcher.h" />
+    <ClInclude Include="matchers\MatcherBase.h" />
+    <ClInclude Include="matchers\NumericMatcher.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="matchers\TypeInfo.h" />
     <ClInclude Include="ztestcpp.h" />
   </ItemGroup>
   <ItemGroup>

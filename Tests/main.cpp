@@ -18,66 +18,66 @@ using namespace std;
 
 namespace {
 
-describe("TestSuite 2")
-{
-    it("I want to sleep, please!")
+    describe("TestSuite 2")
     {
-        // cout << "in spec: " << getTestCaseName() << endl;
-    }
-};
+        it("I want to sleep, please!")
+        {
+            // cout << "in spec: " << getTestCaseName() << endl;
+        }
+    };
 
 
-describe("TestSuiteRegistration")
-{
-    it("Should find this testSuite")
+    describe("TestSuiteRegistration")
     {
-    }
-};
+        it("Should find this testSuite")
+        {
+        }
+    };
 
 
-int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
+    int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
 
-describe("TestSuiteRunner")
-{
-    bool setupcalled, beforeEachCalled, afterEachCalled;
-    void setUp()
+    describe("TestSuiteRunner")
     {
-        setupCalls++;
-        setupcalled = true;
-    }
-    void tearDown()
-    {
-        tearDownCalls++;
-    }
-    void beforeEach()
-    {
-        beforeEachCalls++;
-        beforeEachCalled = true;
-    }
-    void afterEach()
-    {
-        afterEachCalls++;
-        afterEachCalled = true;
-    }
+        bool setupcalled, beforeEachCalled, afterEachCalled;
+        void setUp()
+        {
+            setupCalls++;
+            setupcalled = true;
+        }
+        void tearDown()
+        {
+            tearDownCalls++;
+        }
+        void beforeEach()
+        {
+            beforeEachCalls++;
+            beforeEachCalled = true;
+        }
+        void afterEach()
+        {
+            afterEachCalls++;
+            afterEachCalled = true;
+        }
 
-    it("Should call setUp")
-    {
-        ASSERT_TEST(setupcalled, getTestCaseFullName().c_str());
-    }
-    it("Should call tearDown once")
-    {
-        //ASSERT_TEST(setupCalls == 1, getTestCaseFullName().c_str());
-    }
-    it("Should call beforEach")
-    {
-        ASSERT_TEST(beforeEachCalled, getTestCaseFullName().c_str());
-    }
-    it("Should call afterEach 3 times")
-    {
-        ASSERT_TEST(afterEachCalls == 3, getTestCaseFullName().c_str());
-    }
+        it("Should call setUp")
+        {
+            ASSERT_TEST(setupcalled, getTestCaseFullName().c_str());
+        }
+        it("Should call tearDown once")
+        {
+            //ASSERT_TEST(setupCalls == 1, getTestCaseFullName().c_str());
+        }
+        it("Should call beforEach")
+        {
+            ASSERT_TEST(beforeEachCalled, getTestCaseFullName().c_str());
+        }
+        it("Should call afterEach 3 times")
+        {
+            ASSERT_TEST(afterEachCalls == 3, getTestCaseFullName().c_str());
+        }
 
-};
+    };
 
 }
 
@@ -126,6 +126,56 @@ void TestSuiteRunnerTest()
 }
 
 
+template <typename H, typename T >
+struct TypeList
+{
+    typedef H head;
+    typedef T tail;
+};
+
+struct empty
+{
+};
+
+/*template <typename list>
+struct is_ref;
+
+template <typename H, typename T >
+struct is_ref< TypeList<H, T> >
+{
+    const bool is_ref = is_ref<T>::is_ref;
+};
+
+template <typename H, typename T >
+struct is_ref < TypeList<H&, T> >
+{
+    const bool is_ref = true || is_ref<T>::is_ref;
+};
+*/
+
+/*template<typename T>
+struct is_consta
+{
+    static const bool value = false;
+};
+
+template<typename T>
+struct is_consta<const T&>
+{
+    static const bool value = true;
+};
+
+struct MyStruct
+{
+    MyStruct()
+    {
+        cout << is_consta<int>::value << endl;
+        cout << is_consta<const int&>::value << endl;
+
+    }
+} a;*/
+
+
 
 
 int main(int argc, char* argv[])
@@ -134,6 +184,8 @@ int main(int argc, char* argv[])
     cout << "   zTest Framework for c++ version: " << ZTEST_VERIOSN << endl;
     cout << "--------------------------------------------" << endl << endl;
 
+    argv;
+    argc;
     ztest::TestRunner::RunAll();
 
     //basic tests

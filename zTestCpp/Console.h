@@ -8,13 +8,16 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
-
-
 #ifndef Console_h__
 #define Console_h__
 
 
 #ifdef _WIN32
+
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
 
 inline std::ostream& FAIL_COLOR(std::ostream &s)
 {
@@ -43,9 +46,11 @@ inline std::ostream& DEFAULT_COLOR(std::ostream &s)
 
 #else
 
-#define FAIL_COLOR
-#define PASS_COLOR
-#define DEFAULT_COLOR
+//TODO: implement for other systems
+
+#define FAIL_COLOR "RED"
+#define PASS_COLOR "GREEN"
+#define DEFAULT_COLOR "DEFAULT/white"
 
 
 #endif // _WIN32

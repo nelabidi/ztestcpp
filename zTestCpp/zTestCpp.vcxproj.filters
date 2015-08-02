@@ -13,6 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Matchers">
+      <UniqueIdentifier>{2fd4939a-e12d-4fde-851c-4eb7a11fdabc}</UniqueIdentifier>
+      <Extensions>*Matcher*.h</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -26,6 +30,21 @@
     </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matchers\Matcher.h">
+      <Filter>Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="matchers\MatcherBase.h">
+      <Filter>Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="matchers\TypeInfo.h">
+      <Filter>Matchers</Filter>
+    </ClInclude>
+    <ClInclude Include="matchers\NumericMatcher.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

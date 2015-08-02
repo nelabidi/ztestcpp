@@ -11,57 +11,181 @@
 #include "stdafx.h"
 #include <ztestcpp.h>
 
+namespace {
+    using namespace ztest;
 
-describe("Expect basic, integral types handling")
-{
-    it("should throw an expection if a test fails")
+
+    describe("Matcher, basic types handling, toBe and toEqual")
     {
-        bool thrown = false;
-        try
-        {
-        }
-        catch (ztest::Exception* )
-        {
-            thrown = true;
-        }
-        catch (...)
+
+        bool thrown;
+        void beforeEach()
         {
             thrown = false;
         }
-        ASSERT_TEST(thrown, getTestCaseFullName().c_str());
 
-    }
-    it("should handle bool")
+        template<typename T>
+        void DoTest(const T & a, const T & b)
+        {
+            try
+            {
+                Expect(a).toBe(b);
+                Expect(b).toEqual(b);
+            }
+            catch (const ztest::Exception&)
+            {
+                thrown = true;
+            }
+        }
+
+        it("should check type")
+        {
+            try
+            {
+                // ztest::Expect(0.0).toEqual(0);
+                ztest::Expect('\0', LINE_INFO()).toEqual(0);
+
+                /*ztest::Expect((void*)0).toEqual(0);
+                ztest::Expect(nullptr).toEqual(0);*/
+
+            }
+            catch (const ztest::Exception& e)
+            {
+
+                thrown = true;
+                //TODO: here set the result message
+                std::cerr << e.where() << ": " << e.what() << std::endl;
+            }
+            ASSERT_TEST(thrown, getTestCaseFullName().c_str());
+
+        }
+        it("should handle bool")
+        {
+            try
+            {
+                Expect(true).toBe(true);
+                Expect(true).toEqual(true);
+            }
+            catch (const ztest::Exception& )
+            {
+                thrown = true;
+                //std::cerr << e.what() << std::endl;
+            }
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle char")
+        {
+            char a = 'a';
+            char b = 'b';
+            try
+            {
+                Expect(a).toBe(b);
+                Expect(a).toEqual(a);
+            }
+            catch (const ztest::Exception&)
+            {
+                thrown = true;
+                //std::cerr << e.what() << std::endl;
+            }
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle short")
+        {
+            DoTest<short>(1, 2);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+
+        }
+        it("should handle long")
+        {
+            DoTest<long>(1, 2);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle int")
+        {
+            DoTest<int>(1, 2);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle long long")
+        {
+            DoTest<long long>(1, 2);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle float")
+        {
+            DoTest<float>(1.0, 2.0);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+        it("should handle double")
+        {
+            DoTest<double>(1.0, 2.0);
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+
+        it("should handle double")
+        {
+            DoTest<char *>("a", "b");
+            ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
+        }
+    };
+
+
+
+    describe("Matcher, not operator")
     {
 
-    }
-    it("should handle char")
-    {
+        it("should negate the result")
+        {
+            bool thrown = false;
+            try
+            {
+                ztest::Expect(0, LINE_INFO()).not().toEqual(0);
 
-    }
-    it("should handle short")
-    {
+            }
+            catch (const ztest::Exception& e)
+            {
+                e;
+                thrown = true;
+                //TODO: here set the result message
+                // std::cerr << e.where() << ": " << e.what() << std::endl;
+            }
+            ASSERT_TEST(thrown, getTestCaseFullName().c_str());
+        }
 
-    }
-    it("should handle long")
-    {
+        it("toNotEqual")
+        {
+            bool thrown = false;
+            try
+            {
+                // ztest::Expect(0, LINE_INFO()).toNotEqual(1);
+                ztest::Expect(0, LINE_INFO()).toNotEqual(0);
 
-    }
-    it("should handle int")
-    {
+            }
+            catch (const ztest::Exception& e)
+            {
+                e;
+                thrown = true;
+            }
+            ASSERT_TEST(thrown, getTestCaseFullName().c_str());
+        }
 
-    }
-    it("should handle long long")
-    {
+        it("complex not abuse")
+        {
+            bool thrown = false;
+            try
+            {
+                // !(0 != 0) && (0 == 1) -> false, should throw
+                ztest::Expect(0, LINE_INFO()).not().toNotEqual(0).toEqual(1);
 
-    }
-    it("should handle float")
-    {
+            }
+            catch (const ztest::Exception& e)
+            {
+                e;
+                thrown = true;
+                std::cerr << e.where() << ": " << e.what() << std::endl;
+            }
+            ASSERT_TEST(thrown, getTestCaseFullName().c_str());
+        }
 
-    }
-    it("should handle double")
-    {
+    };
 
-    }
-
-};
+}// end namespace

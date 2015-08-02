@@ -14,13 +14,13 @@ module.exports = function(grunt) {
                 buildParameters: {
                     WarningLevel: 4
                 },
-                verbosity: 'minimal'
+                verbosity: 'quiet'
             }
 		}
     },
     watch: {
 		tests: {
-			files: ['zTestCpp/**/*.cpp','zTestCpp/**/*.h'],
+			files: ['zTestCpp/**/*.cpp','zTestCpp/**/*.h','Tests/**/*.cpp','Tests/**/*.h'],
 			tasks: ['msbuild:tests'],
 			options: {
 				  spawn: false,
