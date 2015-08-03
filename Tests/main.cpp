@@ -125,7 +125,7 @@ void TestSuiteRunnerTest()
 
 }
 
-
+#if 0
 template <typename H, typename T >
 struct TypeList
 {
@@ -164,16 +164,9 @@ struct is_consta<const T&>
 {
     static const bool value = true;
 };
+*/#endif
 
-struct MyStruct
-{
-    MyStruct()
-    {
-        cout << is_consta<int>::value << endl;
-        cout << is_consta<const int&>::value << endl;
 
-    }
-} a;*/
 
 
 

@@ -15,34 +15,35 @@
 #include <iostream>
 #include <sstream>
 
+
 #include <ztestcpp.h>
 
 
 namespace diagnostics {
-struct Assert
-{
-    inline void operator() (const char* file, int line, const char*expr, const char* msg)
+    struct Assert
     {
-        std::stringstream ss;
+        inline void operator() (const char* file, int line, const char*expr, const char* msg)
+        {
+            std::stringstream ss;
 
-        ss << file << "(" << line << "): " << expr << ", " << msg << "..." ;
-        std::cerr << ss.str() << FAIL_COLOR << "Failed" << std::endl << DEFAULT_COLOR;
-        //exit(1);
-        Errors()++;
-    }
-    inline void operator() (const char* msg)
-    {
-        std::stringstream ss;
-        ss << msg << "...";
-        std::cerr << ss.str() << PASS_COLOR << "Ok" << std::endl;
-        std::cerr << DEFAULT_COLOR;
-    }
-    static int& Errors()
-    {
-        static int errors;
-        return errors;
-    }
-};
+            ss << file << "(" << line << "): " << expr << ", " << msg << "..." ;
+            std::cerr << ss.str() << FAIL_COLOR << "Failed" << std::endl << DEFAULT_COLOR;
+            //exit(1);
+            Errors()++;
+        }
+        inline void operator() (const char* msg)
+        {
+            std::stringstream ss;
+            ss << msg << "...";
+            std::cerr << ss.str() << PASS_COLOR << "Ok" << std::endl;
+            std::cerr << DEFAULT_COLOR;
+        }
+        static int& Errors()
+        {
+            static int errors;
+            return errors;
+        }
+    };
 
 }
 

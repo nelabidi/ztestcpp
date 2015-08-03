@@ -121,11 +121,11 @@ namespace {
             ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
         }
 
-        it("should handle double")
+        /*it("should handle double")
         {
             DoTest<char *>("a", "b");
             ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
-        }
+        }*/
     };
 
 

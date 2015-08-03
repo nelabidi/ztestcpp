@@ -18,6 +18,7 @@
 
 #include "matchers/MatcherBase.h"
 #include "matchers/Matcher.h"
+#include "matchers/PointerMatcher.h"
 
 #include "matchers/TypeInfo.h"
 
@@ -231,7 +232,7 @@ namespace ztest {
     {
         typedef detail::type_info<T> info;
 
-        static const MatcherKind kind = (info::is_numeric) ? INTEGRAL_MATCHER : NOT_INTEGRAL_MATCHER;
+        static const MatcherKind kind = (info::is_integral) ? INTEGRAL_MATCHER : NOT_INTEGRAL_MATCHER;
     };
 
 

@@ -46,6 +46,12 @@
     <ClInclude Include="matchers\NumericMatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="matchers\PointerMatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matchers\MatcherBaseImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

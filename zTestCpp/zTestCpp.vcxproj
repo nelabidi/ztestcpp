@@ -78,7 +78,9 @@
     <ClInclude Include="Expect.h" />
     <ClInclude Include="matchers\Matcher.h" />
     <ClInclude Include="matchers\MatcherBase.h" />
+    <ClInclude Include="matchers\MatcherBaseImpl.h" />
     <ClInclude Include="matchers\NumericMatcher.h" />
+    <ClInclude Include="matchers\PointerMatcher.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="matchers\TypeInfo.h" />
     <ClInclude Include="ztestcpp.h" />

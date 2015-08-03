@@ -20,7 +20,9 @@ namespace ztest {
 
         MatcherBase(const char *file, int line) :
             _line(line),
-            _file(file)
+            _file(file),
+            _result(false),
+            _not(false)
         {}
 
         void throwException(const char * from, const char *message)
@@ -33,6 +35,20 @@ namespace ztest {
             }
         }
 
+        void not()
+        {
+            _not = !_not;
+        }
+
+    protected:
+        bool applyNot(bool result)
+        {
+            bool retVal = _not ? !result : result;
+            _not = false;
+            return retVal;
+        }
+
+        bool       _not;
         const char* _file;
         int         _line;
         bool        _result;

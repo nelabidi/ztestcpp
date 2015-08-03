@@ -13,6 +13,22 @@
 #define NumericMatcher_h__
 
 
+namespace ztest {
+
+
+    struct NumericMatcher : public MatcherBase
+    {
+
+
+
+    };
+
+
+
+}
+
+
+
 
 
 
