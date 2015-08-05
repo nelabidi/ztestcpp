@@ -52,6 +52,15 @@
     <ClInclude Include="matchers\StringMatcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSuiteRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSuite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

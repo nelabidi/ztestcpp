@@ -11,9 +11,6 @@
 #ifndef Exception_h__
 #define Exception_h__
 
-#if _MSC_VER < 1200
-#define nullptr 0
-#endif
 
 
 namespace ztest {
