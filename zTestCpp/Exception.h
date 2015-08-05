@@ -24,13 +24,13 @@ namespace ztest {
             : std::runtime_error(message),
               _line(line)
         {
-            _file = (file != nullptr) ? file : "";
+            _file = (file != nullptr) ? file : "unnamed";
         }
         Exception(const std::string message, const char *file = nullptr, int line = 0)
             : std::runtime_error(message),
               _line(line)
         {
-            _file = (file != nullptr) ? file : "";
+            _file = (file != nullptr) ? file : "unnamed";
         }
 
         std::string getFile() const

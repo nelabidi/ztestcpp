@@ -15,7 +15,7 @@ namespace {
     using namespace ztest;
 
 
-    describe("Matcher, basic types handling, toBe and toEqual")
+    describe("Matcher, basic types handling, toBe and toBeEqual")
     {
 
         bool thrown;
@@ -38,15 +38,11 @@ namespace {
             }
         }
 
-        it("should check type")
+        it("should do type check")
         {
             try
             {
-                // ztest::Expect(0.0).toEqual(0);
-                ztest::Expect('\0', LINE_INFO()).toEqual(0);
-
-                /*ztest::Expect((void*)0).toEqual(0);
-                ztest::Expect(nullptr).toEqual(0);*/
+                ztest::Expect('\0', LINE_INFO()).toBeEqual(0);
 
             }
             catch (const ztest::Exception& e)
@@ -80,7 +76,7 @@ namespace {
             try
             {
                 Expect(a).toBe(b);
-                Expect(a).toEqual(a);
+                Expect(a).toBeEqual(a);
             }
             catch (const ztest::Exception&)
             {
@@ -121,11 +117,11 @@ namespace {
             ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
         }
 
-        /*it("should handle double")
+        it("should handle char*")
         {
             DoTest<char *>("a", "b");
             ASSERT_TEST(!thrown, getTestCaseFullName().c_str());
-        }*/
+        }
     };
 
 

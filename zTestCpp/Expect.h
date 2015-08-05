@@ -200,52 +200,15 @@ namespace ztest {
 
 #endif
 
-    typedef enum MatcherKind
-    {
-        INTEGRAL_MATCHER = 1,
-        NOT_INTEGRAL_MATCHER = 0,
-
-    };
-
-    template<typename T, MatcherKind kind>
-    struct MatcherImpl : public Matcher < T >
-    {
-        MatcherImpl(T actual, const char *file, int line) :
-            Matcher(actual, file, line)
-        {
-        }
-    };
-
-
-    template<typename T>
-    struct MatcherImpl<T, INTEGRAL_MATCHER> : public Matcher<T>
-    {
-        MatcherImpl(T actual, const char *file, int line):
-            Matcher(actual, file, line)
-        {
-        }
-    };
-
-
-    template<typename T >
-    struct  MatcherKindGetter
-    {
-        typedef detail::type_info<T> info;
-
-        static const MatcherKind kind = (info::is_integral) ? INTEGRAL_MATCHER : NOT_INTEGRAL_MATCHER;
-    };
+    //Expect / matchers factory
 
 
     template<typename actualType>
     static Matcher<actualType>
     Expect(actualType actual, const char *file = nullptr, int line = 0)
     {
-        // return MatcherImpl<actualType, detail::type_info<actualType>::is_arithmetic>(actual, file, line);
-        //if(detail::type_info<actualType>::is_integral)
-        //    std::cout << "*** is integral \n";
-        //return Matcher<actualType>(actual, file, line);
+        return Matcher<actualType>(actual, file, line);
 
-        return MatcherImpl<actualType, MatcherKindGetter<actualType>::kind >(actual, file, line);
     }
 
 

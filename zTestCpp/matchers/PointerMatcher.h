@@ -16,15 +16,16 @@
 
 namespace ztest {
 
+    //pointer type matcher partial specialization
 
 
     template<typename actualType>
-    struct Matcher < actualType * > : MatcherBaseImp< Matcher < actualType * >>
+    struct Matcher < actualType * > : public MatcherBaseImp< Matcher < actualType * > >
     {
-        typedef  MatcherBaseImp< Matcher < actualType * >> BASE;
+        typedef  MatcherBaseImp< Matcher < actualType * > > BASE;
 
         Matcher(actualType* actual, const char *file, int line)
-            : MatcherBaseImp( file, line),
+            : MatcherBaseImp(file, line),
               _actual(actual)
         {
         }
@@ -32,7 +33,7 @@ namespace ztest {
 
         void toBeNull()
         {
-            _result =  _actual  == ((void *)0);
+            _result = _actual == ((void *)0);
             applyNot(_result);
             throwException("teBeNull", "Not null");
         }
@@ -57,7 +58,7 @@ namespace ztest {
 
 
 
-}//end namespace zetest
+}//end namespace ztest
 
 
 

@@ -15,6 +15,12 @@
 
 namespace ztest {
 
+    //matcher declaration
+    template<typename T>
+    struct Matcher;
+
+
+
     struct MatcherBase
     {
 
@@ -35,10 +41,7 @@ namespace ztest {
             }
         }
 
-        void not()
-        {
-            _not = !_not;
-        }
+
 
     protected:
         bool applyNot(bool result)
@@ -47,12 +50,19 @@ namespace ztest {
             _not = false;
             return retVal;
         }
+        void not()
+        {
+            _not = !_not;
+        }
 
         bool       _not;
         const char* _file;
         int         _line;
         bool        _result;
     };
+
+
+
 
 
 }//end namespace ztest

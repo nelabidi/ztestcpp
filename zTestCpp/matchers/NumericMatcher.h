@@ -13,6 +13,8 @@
 #define NumericMatcher_h__
 
 
+#include "MatcherBaseImpl.h"
+
 namespace ztest {
 
 
