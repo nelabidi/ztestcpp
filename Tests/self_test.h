@@ -53,6 +53,12 @@ namespace diagnostics {
 //use when an assertion is expected to fail
 #define ASSERT_TEST_FAILS(exp,msg)  (void) ((exp) ? diagnostics::Assert()( __FILE__,__LINE__,(#exp),msg)  :  diagnostics::Assert()(msg) )
 
+#undef ASSERT_TEST
+#undef ASSERT_TEST_FAILS
+
+#define ASSERT_TEST
+#define ASSERT_TEST_FAILS
+
 //return errors count if any
 #define HAS_ERRORS() diagnostics::Assert::Errors();
 

@@ -67,13 +67,13 @@ namespace ztest {
 
     private:
 
-        friend struct TestSuiteRunner < testSuite > ;
-        void setRunner(TestSuiteRunner< testSuite > * runner)
+        friend struct TestSuiteRunnerImpl < testSuite > ;
+        void setRunner(TestSuiteRunnerImpl< testSuite > * runner)
         {
             _runner = runner;
         }
 
-        TestSuiteRunner < testSuite >* _runner;
+        TestSuiteRunnerImpl < testSuite >* _runner;
     };
 
 
@@ -83,7 +83,7 @@ namespace ztest {
     {
         TestSuiteRegistrar(const char *name, const char *file, int line)
         {
-            TestRunner::RegisterTestSuiteRunner < TestSuiteRunner<T>>(name, file, line);
+            TestRunner::RegisterTestSuiteRunner < TestSuiteRunnerImpl<T>>(name, file, line);
         }
     };
 

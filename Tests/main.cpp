@@ -108,7 +108,7 @@ void TestSuiteRunnerTest()
 {
 
     using namespace ztest;
-    TestSuiteRunnerBase * runner = TestRunner::findRunner("TestSuiteRunner");
+    TestSuiteRunner * runner = TestRunner::findRunner("TestSuiteRunner");
 
     ASSERT_TEST(runner != nullptr, "TestSuiteRunnerTest: Should find runner");
     /*setupCalls = tearDownCalls = beforeEachCalls = afterEachCalls = 0;

@@ -18,6 +18,8 @@
 namespace ztest {
 
 
+
+
     struct TestRunner
     {
         template<typename suiteRunner>
@@ -37,14 +39,15 @@ namespace ztest {
 
         static void RunAll()
         {
+            DefaultOutputer outputer;
             TestSuiteRunnerList& runners = getRunners();
             for (unsigned int i = 0; i < runners.size(); i++)
             {
-                runners[i]->Run();
+                runners[i]->Run(&outputer);
             }
         }
 
-        static TestSuiteRunnerBase* findRunner(const char* name)
+        static TestSuiteRunner* findRunner(const char* name)
         {
             TestSuiteRunnerList& runners = getRunners();
             std::string strName(name);
@@ -65,7 +68,7 @@ namespace ztest {
             std::string key(ss.str());
             return getRunnersMap().find(key) != getRunnersMap().end();
         }
-        static void addRunner(TestSuiteRunnerBase *runner)
+        static void addRunner(TestSuiteRunner *runner)
         {
             std::stringstream ss;
             ss << runner->getName() << runner->getFile() << runner->getLine();
@@ -80,7 +83,7 @@ namespace ztest {
         }
         static TestSuiteRunnerList& getRunners()
         {
-            static std::vector<TestSuiteRunnerBase*> runners;
+            static std::vector<TestSuiteRunner*> runners;
             return runners;
         }
     };

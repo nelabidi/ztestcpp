@@ -32,13 +32,14 @@ namespace {
         {
             try
             {
-                Expect(a).toBe(b);
-                Expect(b).toBeEqual(b);
+                Expect(a, LINE_INFO()).toBe(b);
+                Expect(b, LINE_INFO()).toBeEqual(b);
             }
             catch (const ztest::Exception& e)
             {
+                e;
                 thrown = true;
-                std::cerr << e.where() << ": " << e.what() << std::endl;
+                //std::cerr << e.where() << ": " << e.what() << std::endl;
             }
         }
 
@@ -210,11 +211,11 @@ namespace {
 
         it("should detect not null")
         {
-
             try
             {
                 char * p = NULL;
                 ztest::Expect(p, LINE_INFO()).toBeNotNull();
+
             }
             catch (const ztest::Exception& e)
             {

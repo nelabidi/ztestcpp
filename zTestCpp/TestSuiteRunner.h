@@ -14,28 +14,15 @@
 namespace ztest {
 
 
-    struct TestSuiteRunnerBase
-    {
-        virtual void Run() = 0;
-        virtual int getLine() = 0;
-        virtual std::string getFile() = 0;
-        virtual std::string getName() = 0;
-        virtual int getTestCasesCount() = 0;
-        virtual TestCaseInfo getTestCase(int index) = 0;
-        virtual TestCaseInfo getCurrentTestCase() = 0;
-        virtual void setTestCaseFilter(TestCaseFilter *filter) = 0;
-    };
-
-
 
 
     template<typename testSuite>
-    struct TestSuiteRunner : public TestSuiteRunnerBase
+    struct TestSuiteRunnerImpl : public TestSuiteRunner
     {
         typedef void (testSuite::*MethodPtr)(void);
 
         //////////////////////////////////////////////////////////////////////////
-        // TestSuiteRunnerBase  Interface implementation
+        // TestSuiteRunner  Interface implementation
         //////////////////////////////////////////////////////////////////////////
 
         virtual int getLine()
@@ -53,14 +40,25 @@ namespace ztest {
             return _name;
         }
 
-        virtual void Run()
+        virtual void Run( TestListener* listener = 0 )
         {
+            if (_isRunning)     return;
+
             //check if this testSuite is enabled the return from the filter should be true
             if (!isTestSuiteEnabled())
                 return;
+            NullListener _listener;
+            if (listener == 0)
+            {
+                listener = &_listener;
+            }
+
+            _isRunning = true;
             //setup
             testSuite * p = &_testSuite;
             p->setRunner(this);
+
+            listener->TestStart( *this);
             p->setUp();
 
             //for each testcase check if enabled and run it
@@ -68,20 +66,32 @@ namespace ztest {
             {
                 //set current test case
                 _currentTestCase = i;
+                TestCaseInfo caseInfo = getCurrentTestCase();
                 //check if enabled
-                if (isTestCaseEnabled(getCurrentTestCase()))
+                if (isTestCaseEnabled(caseInfo))
                 {
+                    listener->TestCaseStart(caseInfo);
                     p->beforeEach();
 
-                    //TODO: handle execptions/assertions here
-
                     MethodPtr ptr = getTestCases()[i].ptr;
-                    (p->*ptr)();
+
+                    try
+                    {
+                        (p->*ptr)();
+                        listener->TestCaseSuccess(caseInfo);
+                    }
+                    catch (const Exception& e)
+                    {
+                        listener->TestCaseFailure(caseInfo, e);
+                    }
 
                     p->afterEach();
+                    listener->TestCaseEnd(caseInfo);
                 }
             }
             p->tearDown();
+            listener->TestEnd(*this);
+            _isRunning = false;
         }
 
         virtual int getTestCasesCount()
@@ -128,13 +138,14 @@ namespace ztest {
             getTestCases().push_back(info);
         }
 
-        TestSuiteRunner(const char *name, const char *file, int line)
+        TestSuiteRunnerImpl(const char *name, const char *file, int line)
             : _name(name),
               _line(line),
               _file(file)
         {
             _filter = nullptr;
             _currentTestCase = -1;
+            _isRunning = false;
         }
 
     private:
@@ -163,7 +174,7 @@ namespace ztest {
         }
 
 
-
+        bool        _isRunning;
         std::string _name;
         std::string _file;
         int         _line;
@@ -172,6 +183,7 @@ namespace ztest {
         TestCaseFilter *_filter;
 
         testSuite  _testSuite;
+
 
 
     };

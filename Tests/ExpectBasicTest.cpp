@@ -29,8 +29,8 @@ namespace {
         {
             try
             {
-                Expect(a).toBe(b);
-                Expect(b).toEqual(b);
+                Expect(a, LINE_INFO()).toBe(b);
+                Expect(b, LINE_INFO()).toEqual(b);
             }
             catch (const ztest::Exception&)
             {
@@ -47,10 +47,10 @@ namespace {
             }
             catch (const ztest::Exception& e)
             {
-
+                e;
                 thrown = true;
                 //TODO: here set the result message
-                std::cerr << e.where() << ": " << e.what() << std::endl;
+                // std::cerr << e.where() << ": " << e.what() << std::endl;
             }
             ASSERT_TEST(thrown, getTestCaseFullName().c_str());
 
@@ -177,7 +177,7 @@ namespace {
             {
                 e;
                 thrown = true;
-                std::cerr << e.where() << ": " << e.what() << std::endl;
+                //std::cerr << e.where() << ": " << e.what() << std::endl;
             }
             ASSERT_TEST(thrown, getTestCaseFullName().c_str());
         }

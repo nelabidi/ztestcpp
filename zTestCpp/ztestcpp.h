@@ -19,6 +19,7 @@
 #include <sstream>
 #include <exception>
 
+#include <iostream> //outputer
 
 
 #define ZTEST_VERIOSN  "1.0.0"
@@ -43,9 +44,11 @@ using namespace std;
 #define GENERATE_UNIQUE_ID(x)  XCONCAT(x,XCONCAT(_,__LINE__))
 
 
-
-
 namespace ztest {
+
+    struct Exception;
+    struct TestListener;
+
 
     struct  TestCaseInfo
     {
@@ -59,6 +62,46 @@ namespace ztest {
     {
         virtual bool filterTestCase(const TestCaseInfo& testCaseInfo) = 0;
         virtual bool filterTestSuite(const std::string& testSuiteName) = 0;
+    };
+
+    struct TestSuiteRunner
+    {
+        virtual void Run(TestListener* = 0) = 0;
+        virtual int getLine() = 0;
+        virtual std::string getFile() = 0;
+        virtual std::string getName() = 0;
+        virtual int getTestCasesCount() = 0;
+        virtual TestCaseInfo getTestCase(int index) = 0;
+        virtual TestCaseInfo getCurrentTestCase() = 0;
+        virtual void setTestCaseFilter(TestCaseFilter *filter) = 0;
+    };
+
+
+    struct TestListener
+    {
+
+        virtual void TestStart(const TestSuiteRunner& runner) = 0;
+
+        virtual void TestCaseStart(const TestCaseInfo& testCaseInfo) = 0;
+
+        virtual void TestCaseSuccess(const TestCaseInfo& testCaseInfo) = 0;
+
+        virtual void TestCaseFailure(const TestCaseInfo& testCaseInfo, const Exception &e) = 0;
+
+        virtual void TestCaseEnd(const TestCaseInfo& testCaseInfo) = 0;
+
+        virtual void TestEnd(const TestSuiteRunner& runner) = 0;
+    };
+
+    struct NullListener : TestListener
+    {
+        virtual void TestStart(const TestSuiteRunner& ) {}
+        virtual void TestCaseStart(const TestCaseInfo& ) {}
+        virtual void TestCaseSuccess(const TestCaseInfo& ) { }
+        virtual void TestCaseFailure(const TestCaseInfo& , const Exception &) { }
+        virtual void TestCaseEnd(const TestCaseInfo& ) {}
+        virtual void TestEnd(const TestSuiteRunner& ) {}
+
     };
 
 
@@ -79,7 +122,7 @@ TESTSUITE_REGISTRATION(GENERATE_UNIQUE_ID(TestSuite), testSuiteName)
 struct XCONCAT(testCaseId,  reg) {\
     XCONCAT(testCaseId , reg )() \
     { \
-        ztest::TestSuiteRunner<CURRENT_TESTSUITE>::addTestCase(&CURRENT_TESTSUITE::testCaseId, testCaseName, __FILE__, __LINE__);\
+        ztest::TestSuiteRunnerImpl<CURRENT_TESTSUITE>::addTestCase(&CURRENT_TESTSUITE::testCaseId, testCaseName, __FILE__, __LINE__);\
     } \
 } XCONCAT(testCaseId, reg);\
 void testCaseId()
@@ -89,29 +132,26 @@ void testCaseId()
 TESTCASE_REGISTRATION(GENERATE_UNIQUE_ID(testCase), testCaseName)
 
 
-
-
-
-
-
-#include "Console.h"
-#include "Expect.h"
-
-
 //forward declaration
 
 namespace ztest {
 
-    struct TestSuiteRunnerBase;
-    typedef std::vector<TestSuiteRunnerBase*> TestSuiteRunnerList;
-    template<typename testSuite> struct TestSuiteRunner;
+    struct TestSuiteRunner;
+    typedef std::vector<TestSuiteRunner*> TestSuiteRunnerList;
+    template<typename testSuite> struct TestSuiteRunnerImpl;
 
 } //end namespace ztest
 
 
+#include "Console.h"
+#include "Expect.h"
 #include "TestSuite.h"
 #include "TestSuiteRunner.h"
+
+#include "DefaultOutputer.h"
+
 #include "TestRunner.h"
+
 
 
 

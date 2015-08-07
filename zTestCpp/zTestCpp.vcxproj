@@ -76,6 +76,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Expect.h" />
+    <ClInclude Include="DefaultOutputer.h" />
     <ClInclude Include="matchers\Matcher.h" />
     <ClInclude Include="matchers\MatcherBase.h" />
     <ClInclude Include="matchers\MatcherBaseImpl.h" />
