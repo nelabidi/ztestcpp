@@ -22,7 +22,7 @@
 #include <iostream> //outputer
 
 
-#define ZTEST_VERIOSN  "1.0.0"
+#define ZTEST_VERIOSN  "1.0.0-beta"
 
 //TODO: add login to file
 //#define ENABLE_LOGING
@@ -80,27 +80,26 @@ namespace ztest {
     struct TestListener
     {
 
-        virtual void TestStart(const TestSuiteRunner& runner) = 0;
-
+        virtual void TestStart() = 0;
+        virtual void TestSuiteStart(const TestSuiteRunner& runner) = 0;
         virtual void TestCaseStart(const TestCaseInfo& testCaseInfo) = 0;
-
         virtual void TestCaseSuccess(const TestCaseInfo& testCaseInfo) = 0;
-
         virtual void TestCaseFailure(const TestCaseInfo& testCaseInfo, const Exception &e) = 0;
-
         virtual void TestCaseEnd(const TestCaseInfo& testCaseInfo) = 0;
-
-        virtual void TestEnd(const TestSuiteRunner& runner) = 0;
+        virtual void TestSuiteEnd(const TestSuiteRunner&) = 0;
+        virtual void TestEnd() = 0;
     };
 
     struct NullListener : TestListener
     {
-        virtual void TestStart(const TestSuiteRunner& ) {}
+        virtual void TestStart() {}
+        virtual void TestSuiteStart(const TestSuiteRunner& ) {}
         virtual void TestCaseStart(const TestCaseInfo& ) {}
         virtual void TestCaseSuccess(const TestCaseInfo& ) { }
         virtual void TestCaseFailure(const TestCaseInfo& , const Exception &) { }
         virtual void TestCaseEnd(const TestCaseInfo& ) {}
-        virtual void TestEnd(const TestSuiteRunner& ) {}
+        virtual void TestSuiteEnd(const TestSuiteRunner&) {}
+        virtual void TestEnd() {}
 
     };
 
@@ -145,6 +144,7 @@ namespace ztest {
 
 #include "Console.h"
 #include "Expect.h"
+#include "TestResults.h"
 #include "TestSuite.h"
 #include "TestSuiteRunner.h"
 

@@ -18,9 +18,7 @@
 namespace ztest {
 
 
-
-
-    struct TestRunner
+    struct TestRunner : NullListener
     {
         template<typename suiteRunner>
         static void RegisterTestSuiteRunner(const char *name, const char *file, int line)
@@ -37,14 +35,11 @@ namespace ztest {
             runners = getRunners();
         }
 
-        static void RunAll()
+        static int RunAll()
         {
             DefaultOutputer outputer;
-            TestSuiteRunnerList& runners = getRunners();
-            for (unsigned int i = 0; i < runners.size(); i++)
-            {
-                runners[i]->Run(&outputer);
-            }
+            TestRunner   testrunner(&outputer);
+            return testrunner.Run();
         }
 
         static TestSuiteRunner* findRunner(const char* name)
@@ -58,6 +53,44 @@ namespace ztest {
                     return runners[i];
             }
             return nullptr;
+        }
+
+        TestRunner(OutPuter* outputer)
+            : _outputer(outputer)
+        {}
+
+        int Run()
+        {
+            _listeners.addListener(this);
+            _listeners.addListener(_outputer);
+
+            _listeners.TestStart();
+
+            TestSuiteRunnerList& runners = getRunners();
+            for (unsigned int i = 0; i < runners.size(); i++)
+            {
+                runners[i]->Run(&_listeners);
+            }
+            _listeners.TestEnd();
+
+            _outputer->OutPutTestResults(_results);
+            return _results.failedCount();
+        }
+
+        void addListener(TestListener *listener)
+        {
+            _listeners.addListener(listener);
+        }
+
+        //Listen on test case results
+        virtual void TestCaseSuccess(const TestCaseInfo& testCase)
+        {
+            _results.addSucceeded(testCase);
+        }
+
+        virtual void TestCaseFailure(const TestCaseInfo& testCase, const Exception &e)
+        {
+            _results.addFailed(testCase, e.getFile(), e.getLine(), e.what());
         }
 
     private:
@@ -86,6 +119,88 @@ namespace ztest {
             static std::vector<TestSuiteRunner*> runners;
             return runners;
         }
+        //listeners container
+        struct ListenersContainer : TestListener
+        {
+
+            void addListener(TestListener * l)
+            {
+                _listeners.push_back(l);
+            }
+            //TestListener interface
+            virtual void TestStart()
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestStart();
+                }
+            }
+
+            virtual void TestSuiteStart(const TestSuiteRunner& runner)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestSuiteStart(runner);
+                }
+            }
+
+            virtual void TestCaseStart(const TestCaseInfo& testCaseInfo)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestCaseStart(testCaseInfo);
+                }
+            }
+
+            virtual void TestCaseSuccess(const TestCaseInfo& testCaseInfo)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestCaseSuccess(testCaseInfo);
+                }
+            }
+
+            virtual void TestCaseFailure(const TestCaseInfo& testCaseInfo, const Exception &e)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestCaseFailure(testCaseInfo, e);
+                }
+            }
+
+            virtual void TestCaseEnd(const TestCaseInfo& testCaseInfo)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestCaseEnd(testCaseInfo);
+                }
+            }
+
+            virtual void TestSuiteEnd(const TestSuiteRunner& runner)
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestSuiteEnd(runner);
+                }
+            }
+
+            virtual void TestEnd()
+            {
+                for (unsigned int i = 0; i < _listeners.size(); i++)
+                {
+                    _listeners[i]->TestEnd();
+                }
+            }
+
+        private:
+            std::vector<TestListener*> _listeners;
+
+        };
+
+        OutPuter            *_outputer;
+        TestResults         _results;
+        ListenersContainer  _listeners;
+
     };
 
 

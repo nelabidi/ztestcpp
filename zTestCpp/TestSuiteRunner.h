@@ -40,13 +40,14 @@ namespace ztest {
             return _name;
         }
 
-        virtual void Run( TestListener* listener = 0 )
+        virtual void Run(TestListener* listener = 0 )
         {
             if (_isRunning)     return;
 
             //check if this testSuite is enabled the return from the filter should be true
             if (!isTestSuiteEnabled())
                 return;
+
             NullListener _listener;
             if (listener == 0)
             {
@@ -58,7 +59,7 @@ namespace ztest {
             testSuite * p = &_testSuite;
             p->setRunner(this);
 
-            listener->TestStart( *this);
+            listener->TestSuiteStart(*this);
             p->setUp();
 
             //for each testcase check if enabled and run it
@@ -90,7 +91,7 @@ namespace ztest {
                 }
             }
             p->tearDown();
-            listener->TestEnd(*this);
+            listener->TestSuiteEnd(*this);
             _isRunning = false;
         }
 
