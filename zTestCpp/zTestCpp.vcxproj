@@ -87,7 +87,6 @@
     <ClInclude Include="TestSuiteRunner.h" />
     <ClInclude Include="TestRunner.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="matchers\TypeInfo.h" />
     <ClInclude Include="ztestcpp.h" />
   </ItemGroup>
   <ItemGroup>

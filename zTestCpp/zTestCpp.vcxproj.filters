@@ -36,9 +36,6 @@
     <ClInclude Include="matchers\MatcherBase.h">
       <Filter>Matchers</Filter>
     </ClInclude>
-    <ClInclude Include="matchers\TypeInfo.h">
-      <Filter>Matchers</Filter>
-    </ClInclude>
     <ClInclude Include="matchers\MatcherBaseImpl.h">
       <Filter>Matchers</Filter>
     </ClInclude>

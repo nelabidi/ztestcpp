@@ -1,16 +1,15 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT: zTestCpp
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  Exception.h
 // PURPOSE: define ztest::Exception class
 // DATE: 2015/08/01
-// NOTES: depends on std::expection, std::string, std::stringstream
+// NOTES: depends on std::runtime_error, std::string, std::stringstream
 //
 //////////////////////////////////////////////////////////////////////////
 
 #ifndef Exception_h__
 #define Exception_h__
-
 
 
 namespace ztest {

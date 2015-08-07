@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  MatcherBase.h
 // PURPOSE:
 // DATE: 2015/08/02

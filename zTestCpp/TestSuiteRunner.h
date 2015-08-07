@@ -1,10 +1,13 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  TestSuiteRunner.h
-// PURPOSE:
+// PURPOSE: declare and implement the TestSuiteRunner class
 // DATE: 2015/08/05
+
 // NOTES:
+//      for every test suite, there is a TestSuiteRunnerImpl object responsible of running it
+//      and reporting running events.
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -13,9 +16,11 @@
 
 namespace ztest {
 
-
-
-
+    /*!
+     * \class   TestSuiteRunnerImpl
+     *
+     * \brief Implement TestSuiteRunner Interface
+     */
     template<typename testSuite>
     struct TestSuiteRunnerImpl : public TestSuiteRunner
     {
@@ -24,21 +29,25 @@ namespace ztest {
         //////////////////////////////////////////////////////////////////////////
         // TestSuiteRunner  Interface implementation
         //////////////////////////////////////////////////////////////////////////
-
         virtual int getLine()
         {
             return _line;
         }
-
         virtual std::string getFile()
         {
             return _file;
         }
-
         virtual std::string getName()
         {
             return _name;
         }
+
+        ///
+        /// \brief Run the attached TestSuite
+        ///
+        ///
+        /// \param[in] : TestListener object
+        ///
 
         virtual void Run(TestListener* listener = 0 )
         {
@@ -62,7 +71,7 @@ namespace ztest {
             listener->TestSuiteStart(*this);
             p->setUp();
 
-            //for each testcase check if enabled and run it
+            //for each TestCase check if enabled and run it
             for (int i = 0; i < getTestCasesCount(); i++)
             {
                 //set current test case
@@ -115,12 +124,16 @@ namespace ztest {
             return info;
         }
 
-
+        ///
+        /// \brief  getCurrentTestCase
+        ///
+        /// \return Current running Test case
+        ///
         virtual TestCaseInfo getCurrentTestCase()
         {
             return getTestCase(_currentTestCase);
         }
-
+        /// Set the Test Case Filter, see TestCaseFilter for more info
         virtual void setTestCaseFilter(TestCaseFilter *filter)
         {
             _filter = filter;
@@ -128,6 +141,9 @@ namespace ztest {
 
         //////////////////////////////////////////////////////////////////////////
         // Public Methods
+        //////////////////////////////////////////////////////////////////////////
+
+        // add a Test Case used by it macro to register a test case
         //////////////////////////////////////////////////////////////////////////
         static void addTestCase(MethodPtr ptr, const char *name, const char *file, int line)
         {
@@ -154,6 +170,7 @@ namespace ztest {
         struct TestCase;
         typedef std::vector<TestCase> TestCasesList;
 
+        //Test Case internal data
         struct TestCase : public TestCaseInfo
         {
             MethodPtr ptr;
@@ -175,16 +192,15 @@ namespace ztest {
         }
 
 
-        bool        _isRunning;
-        std::string _name;
-        std::string _file;
-        int         _line;
-        int         _currentTestCase;
+        bool        _isRunning; // running state
+        std::string _name;      // Test Suite name
+        std::string _file;      // Test Suite file
+        int         _line;      // Test Suite line
+        int         _currentTestCase; // current running test case index
 
-        TestCaseFilter *_filter;
+        TestCaseFilter *_filter; // the test case filter object
 
-        testSuite  _testSuite;
-
+        testSuite  _testSuite;  // the test suite instance
 
 
     };

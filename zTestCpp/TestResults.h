@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  TestResults.h
-// PURPOSE:
+// PURPOSE: implement TestResult class
 // DATE: 2015/08/06
 // NOTES:
 //
@@ -17,7 +17,7 @@
 
 namespace ztest {
 
-
+    //Failed results data
     struct FailedResult
     {
         TestCaseInfo testCase;
@@ -25,7 +25,6 @@ namespace ztest {
         int         line;
         std::string message;
     };
-
 
     //Failed/succeeded results container
     struct TestResults
@@ -69,11 +68,9 @@ namespace ztest {
     private:
 
         std::vector<FailedResult> _failed;
-        std::vector<TestCaseInfo> _succeded; //succeeded
+        std::vector<TestCaseInfo> _succeded;
 
     };
-
-
 
 
 } // end namespace ztest

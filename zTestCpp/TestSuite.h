@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  TestSuite.h
-// PURPOSE:
+// PURPOSE: declare and implement the TestSuiteBase and TestSuiteRegistrar
 // DATE: 2015/08/05
 // NOTES:
 //
@@ -15,7 +15,11 @@
 namespace ztest {
 
 
-
+    /*!
+     * \class TestSuiteBase
+     *
+     * \brief The base class for every Test suite
+     */
     template<typename testSuite>
     struct TestSuiteBase
     {
@@ -23,43 +27,38 @@ namespace ztest {
 
         void setUp()
         {
-            //cout << >> TestSuiteImpl::setUp" << endl;
-            LOG("-> TestSuiteImpl::setUp");
         }
-
         void tearDown()
         {
-            LOG("-> TestSuiteImpl::tearDown");
         }
-
         void beforeEach()
         {
-            LOG("-> TestSuiteImpl::beforeEach");
         }
         void afterEach()
         {
-            LOG("-> TestSuiteImpl::afterEach");
         }
-
+        //
+        // return the name of the current TestSuite, the string parameter passed to describe
         std::string getName()
         {
             return _runner->getName();
         }
-
+        //return the file where the test-suite is implemented
         std::string getFile()
         {
             return _runner->getFile();
         }
-
+        //return the line where the test-suite is declared
         int     getLine()
         {
             return _runner->getLine();
         }
-
+        //return the name, the string parameter passed to it macro
         std::string getTestCaseName()
         {
             return _runner->getCurrentTestCase().name;
         }
+        //return the full name of the spec
         std::string getTestCaseFullName()
         {
             return _runner->getCurrentTestCase().fullName;
@@ -68,27 +67,29 @@ namespace ztest {
     private:
 
         friend struct TestSuiteRunnerImpl < testSuite > ;
+        //called from TestSuiteRunner to set the current runner
         void setRunner(TestSuiteRunnerImpl< testSuite > * runner)
         {
             _runner = runner;
         }
-
         TestSuiteRunnerImpl < testSuite >* _runner;
     };
 
 
-
+    /*!
+     * \class TestSuiteRegistrar
+     *
+     * \brief this class is responsible for the test suite registration. there is one instance of this
+     *        for each declared test suite with describe macro
+     */
     template<typename T>
-    struct TestSuiteRegistrar //: public TestSuiteRegistery
+    struct TestSuiteRegistrar
     {
         TestSuiteRegistrar(const char *name, const char *file, int line)
         {
             TestRunner::RegisterTestSuiteRunner < TestSuiteRunnerImpl<T>>(name, file, line);
         }
     };
-
-
-
 
 
 }// end namespace ztest

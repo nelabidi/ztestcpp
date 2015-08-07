@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  DefaultOutputer.h
-// PURPOSE:
+// PURPOSE: a default and basic Outputer implementation
 // DATE: 2015/08/05
 // NOTES:
 //
@@ -12,16 +12,7 @@
 #define DefaultOutputer_h__
 
 
-
-#include "TestSuiteRunner.h"
-
 namespace ztest {
-
-
-    struct OutPuter : NullListener
-    {
-        virtual void OutPutTestResults(TestResults &) = 0;
-    };
 
 
     struct DefaultOutputer :  OutPuter
@@ -72,26 +63,6 @@ namespace ztest {
 
             }
         }
-
-        /*virtual void TestStart() {}
-
-        virtual void TestSuiteStart(const TestSuiteRunner& )
-        {
-        }
-
-        virtual void TestCaseStart(const TestCaseInfo& )
-        {
-        }
-
-        virtual void TestCaseEnd(const TestCaseInfo& )
-        {
-
-        }
-
-        virtual void TestSuiteEnd(const TestSuiteRunner&)
-        {
-        }*/
-
     };
 
 

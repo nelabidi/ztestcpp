@@ -1,17 +1,24 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
+//////////////////////////////////////////////////////////////////////////
 //
+// PROJECT:  zTestC++ (zTestCpp) C++ Testing framework
+// FILE:  stdafx.h
+// PURPOSE: pre-compiled header file
+// DATE: 2015/08/07
+// NOTES:
+//
+//////////////////////////////////////////////////////////////////////////
 
+#ifdef _MSC_VER
 #pragma once
+#endif // _MSC_VER
+
+#ifndef stdafx_h__
+#define stdafx_h__
 
 
-//#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include "ztestcpp.h"
 
+#endif // stdafx_h__
 
-
-
-// TODO: reference additional headers your program requires here
 
 

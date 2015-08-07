@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  StringMatcher.h
 // PURPOSE:
 // DATE: 2015/08/05
@@ -11,12 +11,7 @@
 #define StringMatcher_h__
 
 
-#include "MatcherBaseImpl.h"
-
-
 namespace ztest {
-
-
 
     template<>
     struct Matcher<const char*> : MatcherBaseImp<Matcher<const char *> >
@@ -33,10 +28,6 @@ namespace ztest {
     protected:
         const char * _actual;
     };
-
-
-
-
 
 }
 
