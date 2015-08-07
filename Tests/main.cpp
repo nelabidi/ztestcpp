@@ -1,31 +1,29 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:  zTestCpp C++ Testing Framework
+// PROJECT:  zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  main.cpp
-// PURPOSE:
+// PURPOSE: the file name speaks of itself
 // DATE: 2015/08/01
 // NOTES:
-//
+//      most of this tests here speaks of them-self, that the goal of zTestCpp
+//      to be more readable
 //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "self_test.h"
 
-
-
 using namespace std;
 
-
+//anonymous namespace are very important to avoid collisions
 namespace {
 
     describe("TestSuite 2")
     {
         it("I want to sleep, please!")
         {
-            // cout << "in spec: " << getTestCaseName() << endl;
+            // YES, I Know :)
         }
     };
-
 
     describe("TestSuiteRegistration")
     {
@@ -33,7 +31,6 @@ namespace {
         {
         }
     };
-
 
     int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
 
@@ -66,7 +63,6 @@ namespace {
         }
         it("Should call tearDown once")
         {
-            //ASSERT_TEST(setupCalls == 1, getTestCaseFullName().c_str());
         }
         it("Should call beforEach")
         {
@@ -121,54 +117,7 @@ void TestSuiteRunnerTest()
     ASSERT_TEST(beforeEachCalls == 4, "TestSuiteRunnerTest: Should call afterEach 4 times");
 
 
-
-
 }
-
-#if 0
-template <typename H, typename T >
-struct TypeList
-{
-    typedef H head;
-    typedef T tail;
-};
-
-struct empty
-{
-};
-
-/*template <typename list>
-struct is_ref;
-
-template <typename H, typename T >
-struct is_ref< TypeList<H, T> >
-{
-    const bool is_ref = is_ref<T>::is_ref;
-};
-
-template <typename H, typename T >
-struct is_ref < TypeList<H&, T> >
-{
-    const bool is_ref = true || is_ref<T>::is_ref;
-};
-*/
-
-/*template<typename T>
-struct is_consta
-{
-    static const bool value = false;
-};
-
-template<typename T>
-struct is_consta<const T&>
-{
-    static const bool value = true;
-};
-*/#endif
-
-
-
-
 
 
 int main(int argc, char* argv[])

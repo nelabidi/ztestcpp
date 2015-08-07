@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  ExpectBasicTest.cpp
-// PURPOSE:
+// PURPOSE: basic matchers test cases
 // DATE: 2015/08/01
 // NOTES:
 //

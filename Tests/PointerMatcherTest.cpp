@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  PointerMatcherTest.cpp
-// PURPOSE:
+// PURPOSE: Pointermatcher object test suite
 // DATE: 2015/08/02
 // NOTES:
 //
@@ -12,8 +12,7 @@
 #include "stdafx.h"
 #include <ztestcpp.h>
 
-
-
+//anonymous namespace are very important to avoid collisions
 namespace {
 
     using namespace ztest;
