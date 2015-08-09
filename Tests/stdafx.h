@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  stdafx.h
 // PURPOSE: pre-recompiled headers
 // DATE: 2015/07/31

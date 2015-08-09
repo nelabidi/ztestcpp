@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  PointerMatcher.h
 // PURPOSE:
 // DATE: 2015/08/02
@@ -12,7 +12,6 @@
 #ifndef PointerMatcher_h__
 #define PointerMatcher_h__
 
-#include "MatcherBaseImpl.h"
 
 namespace ztest {
 

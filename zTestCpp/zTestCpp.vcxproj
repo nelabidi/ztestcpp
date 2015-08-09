@@ -82,11 +82,11 @@
     <ClInclude Include="matchers\MatcherBaseImpl.h" />
     <ClInclude Include="matchers\PointerMatcher.h" />
     <ClInclude Include="matchers\StringMatcher.h" />
+    <ClInclude Include="TestResults.h" />
     <ClInclude Include="TestSuite.h" />
     <ClInclude Include="TestSuiteRunner.h" />
     <ClInclude Include="TestRunner.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="matchers\TypeInfo.h" />
     <ClInclude Include="ztestcpp.h" />
   </ItemGroup>
   <ItemGroup>

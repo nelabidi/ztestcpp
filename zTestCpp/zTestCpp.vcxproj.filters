@@ -36,9 +36,6 @@
     <ClInclude Include="matchers\MatcherBase.h">
       <Filter>Matchers</Filter>
     </ClInclude>
-    <ClInclude Include="matchers\TypeInfo.h">
-      <Filter>Matchers</Filter>
-    </ClInclude>
     <ClInclude Include="matchers\MatcherBaseImpl.h">
       <Filter>Matchers</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DefaultOutputer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestResults.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

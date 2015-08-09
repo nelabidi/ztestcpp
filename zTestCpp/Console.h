@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  Console.h
-// PURPOSE:
+// PURPOSE: Console helper functions
 // DATE: 2015/08/01
 // NOTES:
 //

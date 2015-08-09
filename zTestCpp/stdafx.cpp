@@ -1,8 +1,13 @@
-// stdafx.cpp : source file that includes just the standard includes
-// zTestCpp.pch will be the pre-compiled header
-// stdafx.obj will contain the pre-compiled type information
+
+//////////////////////////////////////////////////////////////////////////
+//
+// PROJECT:  zTestC++ (zTestCpp) C++ Testing framework
+// FILE:  stdafx.cpp
+// PURPOSE: source file that includes just stdafx.h
+// DATE: 2015/08/07
+// NOTES:
+//      stdafx.obj will contain the pre-compiled type information
+//      TestCpp.pch will be the pre-compiled header
+//////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-
-// TODO: reference any additional headers you need in STDAFX.H
-// and not in this file

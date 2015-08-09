@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////
 //
-// PROJECT:
+// PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  DefaultOutputer.h
-// PURPOSE:
+// PURPOSE: a default and basic Outputer implementation
 // DATE: 2015/08/05
 // NOTES:
 //
@@ -12,23 +12,11 @@
 #define DefaultOutputer_h__
 
 
-
-#include "TestSuiteRunner.h"
-
 namespace ztest {
 
 
-    struct DefaultOutputer : TestListener
+    struct DefaultOutputer :  OutPuter
     {
-
-        virtual void TestStart(const TestSuiteRunner& )
-        {
-        }
-
-        virtual void TestCaseStart(const TestCaseInfo& )
-        {
-
-        }
 
         virtual void TestCaseSuccess(const TestCaseInfo& )
         {
@@ -40,16 +28,41 @@ namespace ztest {
             std::cerr << FAIL_COLOR << "X" << DEFAULT_COLOR;
         }
 
-        virtual void TestCaseEnd(const TestCaseInfo& )
-        {
-
-        }
-
-        virtual void TestEnd(const TestSuiteRunner& )
+        virtual void TestEnd( )
         {
             std::cerr << DEFAULT_COLOR << std::endl;
         }
 
+        virtual void OutPutTestResults(TestResults &testResults)
+        {
+            outPutFailures(testResults);
+            outPutSummary(testResults);
+        }
+
+    private:
+        void outPutSummary(TestResults & testResults)
+        {
+            std::cerr << "   " << PASS_COLOR << testResults.succeededCount();
+            std::cerr << DEFAULT_COLOR << " Passed, ";
+            std::cerr << FAIL_COLOR << testResults.failedCount();
+            std::cerr << DEFAULT_COLOR << " Failed.\n\n";
+
+        }
+        void outPutFailures(TestResults & testResults)
+        {
+            if (!testResults.failedCount())
+                return;
+
+            std::cerr << FAIL_COLOR << testResults.failedCount()  << " Test Failed:\n" << DEFAULT_COLOR;
+            for (unsigned int i = 0; i < testResults.failedCount(); i++)
+            {
+                FailedResult result = testResults.getFailed(i);
+                std::stringstream ss;
+                ss << result.file << "(" << result.line << "): " <<  result.message << ".\n";
+                std::cerr << ss.str();
+
+            }
+        }
     };
 
 
