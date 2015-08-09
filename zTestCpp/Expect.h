@@ -20,6 +20,16 @@
 //expect macro helper
 #define expect(v) ztest::Expect(v,__FILE__, __LINE__)
 
+//Expect expression to thorw an exception
+#define ExpectThrow(expr,type) \
+{\
+    bool thrown = false;\
+    try{ (expr);\
+                }catch(type ){ thrown = true; }\
+    catch(...){thrown = true; throw ztest::Exception("caught unknown exception",__FILE__,__LINE__); }\
+    if(!thrown)  throw ztest::Exception("Expected Exception of type '" #type "' not thrown",__FILE__,__LINE__);\
+}
+
 namespace ztest {
 
     //Expect,  matchers factory

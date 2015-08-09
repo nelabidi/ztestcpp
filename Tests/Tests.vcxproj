@@ -83,6 +83,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExceptionThrowTest.cpp" />
     <ClCompile Include="ExpectBasicTest.cpp" />
     <ClCompile Include="PointerMatcherTest.cpp" />
     <ClCompile Include="stdafx.cpp">
