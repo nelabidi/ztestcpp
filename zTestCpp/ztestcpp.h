@@ -21,7 +21,7 @@
 #include <iostream> //used by DefaultOutputer
 
 
-#define ZTEST_VERIOSN  "1.0.0-beta"
+#define ZTEST_VERIOSN  "1.0.0"
 
 
 //Helper macros
