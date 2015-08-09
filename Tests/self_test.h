@@ -2,7 +2,7 @@
 //
 // PROJECT: zTestC++ (zTestCpp) C++ Testing framework
 // FILE:  self_test.h
-// PURPOSE: macros and object used in the early stage of the frame work development
+// PURPOSE: macros and object used in the early development stage.
 // DATE: 2015/07/31
 // NOTES:
 //

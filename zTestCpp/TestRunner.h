@@ -27,13 +27,10 @@ namespace ztest {
         template<typename suiteRunner>
         static void RegisterTestSuiteRunner(const char *name, const char *file, int line)
         {
-            //check if runner is already registered unique
-            if (!isRunnerRegistered(name, file, line))
-            {
-                //TODO: implement RunnersRegistery to cleanup this pointers
-                suiteRunner *runner = new suiteRunner(name, file, line);
-                addRunner(runner);
-            }
+            suiteRunner *runner = new suiteRunner(name, file, line);
+            //fails if already registered
+            if (!addRunner(runner))
+                delete runner;
         }
         //return all the registered runners
         static void getAllRunners(TestSuiteRunnerList & runners)
@@ -83,7 +80,7 @@ namespace ztest {
             _listeners.addListener(_outputer);
             //raise the TestStart events
             _listeners.TestStart();
-            //call Run on all registred runners
+            //call Run on all registered runners
             TestSuiteRunnerList& runners = getRunners();
             for (unsigned int i = 0; i < runners.size(); i++)
             {
@@ -115,34 +112,71 @@ namespace ztest {
 
     private:
 
-        //return true if a test runner with the same name,file and line is already registred
-        static bool isRunnerRegistered(const char *name, const char *file, int line)
+        //Runners Registry
+        struct RunnersRegistry
         {
-            std::stringstream ss;
-            ss << name << file << line;
-            std::string key(ss.str());
-            return getRunnersMap().find(key) != getRunnersMap().end();
-        }
-        // add test runner to the registry
-        static void addRunner(TestSuiteRunner *runner)
-        {
-            std::stringstream ss;
-            ss << runner->getName() << runner->getFile() << runner->getLine();
-            std::string key(ss.str());
-            getRunners().push_back(runner);
-            getRunnersMap()[key] = getRunners().size() - 1;
-        }
-        // return test runners map for Test Runners lookup
-        static std::map<std::string, int> & getRunnersMap()
-        {
-            static  std::map<std::string, int> runnersMap;
-            return runnersMap;
-        }
+            RunnersRegistry()
+            {
+                runners.reserve(64);
+            }
+            ~RunnersRegistry()
+            {
+                //delete any registered TestSuiteRunner
+                for (unsigned i = 0; i < runners.size(); i++)
+                {
+                    delete runners[i];
+                }
+            }
+            // add test runner to the registry
+            bool addRunner(TestSuiteRunner *runner)
+            {
+                //check if runner is already registered, it's a rare case but doesn't hurt to check
+                if (isRunnerRegistered(runner->getName(), runner->getFile(), runner->getLine()))
+                    return false;
 
+                std::stringstream ss;
+                ss << runner->getName() << runner->getFile() << runner->getLine();
+                std::string key(ss.str());
+                getRunners().push_back(runner);
+                runnersMap[key] = getRunners().size() - 1;
+
+                return true;
+            }
+
+            TestSuiteRunnerList& getRunners()
+            {
+                return runners;
+            }
+        private:
+            //return true if a test runner with the same name,file and line is already registered
+            bool isRunnerRegistered(const std::string& name, const std::string& file, int line)
+            {
+                std::stringstream ss;
+                ss << name << file << line;
+                std::string key(ss.str());
+                return runnersMap.find(key) != runnersMap.end();
+            }
+
+            std::vector<TestSuiteRunner*> runners;
+            //runners map for Test Runners lookup
+            std::map<std::string, int> runnersMap;
+        };
+
+        //return RunnersRegistery singleton
+        static RunnersRegistry& getRunnersRegistry()
+        {
+            static RunnersRegistry registery;
+            return registery;
+        }
+        //registery methods wrappers
         static TestSuiteRunnerList& getRunners()
         {
-            static std::vector<TestSuiteRunner*> runners;
-            return runners;
+            return getRunnersRegistry().getRunners();
+        }
+
+        static bool addRunner(TestSuiteRunner *runner)
+        {
+            return getRunnersRegistry().addRunner(runner);
         }
 
         /*!
