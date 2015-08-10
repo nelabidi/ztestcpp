@@ -65,11 +65,12 @@ namespace ztest {
 
             _isRunning = true;
             //setup
-            testSuite * p = &_testSuite;
-            p->setRunner(this);
+            testSuite * suite = &_testSuite;
+            suite->setRunner(this);
 
-            listener->TestSuiteStart(*this);
-            p->setUp();
+            //listener->TestSuiteStart(*this);
+            //p->setUp();
+            callSetup(suite, listener);
 
             //for each TestCase check if enabled and run it
             for (int i = 0; i < getTestCasesCount(); i++)
@@ -81,13 +82,14 @@ namespace ztest {
                 if (isTestCaseEnabled(caseInfo))
                 {
                     listener->TestCaseStart(caseInfo);
-                    p->beforeEach();
+                    //p->beforeEach();
+                    callBeforeEach(suite, listener);
 
                     MethodPtr ptr = getTestCases()[i].ptr;
 
                     try
                     {
-                        (p->*ptr)();
+                        (suite->*ptr)();
                         listener->TestCaseSuccess(caseInfo);
                     }
                     catch (const Exception& e)
@@ -95,12 +97,14 @@ namespace ztest {
                         listener->TestCaseFailure(caseInfo, e);
                     }
 
-                    p->afterEach();
+                    //p->afterEach();
+                    callAfterEach(suite, listener);
                     listener->TestCaseEnd(caseInfo);
                 }
             }
-            p->tearDown();
-            listener->TestSuiteEnd(*this);
+            callTearDown(suite, listener);
+            // p->tearDown();
+            //listener->TestSuiteEnd(*this);
             _isRunning = false;
         }
 
@@ -190,7 +194,72 @@ namespace ztest {
         {
             return _filter != nullptr ? _filter->filterTestCase(info) : true;
         }
+        //testSuite Calls
+        void callSetup(testSuite* suite, TestListener *listener)
+        {
+            listener->TestSuiteStart(*this);
+            try
+            {
+                suite->setUp();
+            }
+            catch (const Exception &e)
+            {
+                TestCaseInfo info;
+                info.fullName = "setUp of " + _name;
+                info.file = _file;
+                info.line = _line;
+                listener->TestCaseFailure(info, e);
+            }
+        }
 
+        void callTearDown(testSuite* suite, TestListener *listener)
+        {
+            try
+            {
+                suite->tearDown();
+            }
+            catch (const Exception &e)
+            {
+                TestCaseInfo info;
+                info.fullName = "tearDown of " + _name;
+                info.file = _file;
+                info.line = _line;
+                listener->TestCaseFailure(info, e);
+            }
+            listener->TestSuiteEnd(*this);
+        }
+        void callBeforeEach(testSuite* suite, TestListener *listener)
+        {
+            try
+            {
+                suite->beforeEach();
+            }
+            catch (const Exception &e)
+            {
+                TestCaseInfo info;
+                info.fullName = "beforeEach of " + _name;
+                info.file = _file;
+                info.line = _line;
+                listener->TestCaseFailure(info, e);
+            }
+        }
+
+        void callAfterEach(testSuite* suite, TestListener *listener)
+        {
+            try
+            {
+                suite->afterEach();
+            }
+            catch (const Exception &e)
+            {
+                TestCaseInfo info;
+                info.fullName = "afterEach of " + _name;
+                info.file = _file;
+                info.line = _line;
+                listener->TestCaseFailure(info, e);
+            }
+
+        }
 
         bool        _isRunning; // running state
         std::string _name;      // Test Suite name

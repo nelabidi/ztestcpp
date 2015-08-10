@@ -32,15 +32,13 @@ namespace ztest {
 
         void toBeTrue()
         {
-            _result = (_actual == true);
-            applyNot(_result);
+            _result = applyNot(_actual == true);
             throwException("toBeTrue", "Not true");
         }
 
         void toBeFalse()
         {
-            _result = (_actual == false);
-            applyNot(_result);
+            _result = applyNot(_actual == false);
             throwException("toBeFalse", "Not false");
         }
 

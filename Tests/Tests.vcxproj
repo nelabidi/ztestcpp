@@ -86,6 +86,7 @@
     <ClCompile Include="BooleanMatcherTest.cpp" />
     <ClCompile Include="ExceptionThrowTest.cpp" />
     <ClCompile Include="ExpectBasicTest.cpp" />
+    <ClCompile Include="ExpectExtraTest.cpp" />
     <ClCompile Include="PointerMatcherTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

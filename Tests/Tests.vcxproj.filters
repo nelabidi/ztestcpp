@@ -40,5 +40,8 @@
     <ClCompile Include="BooleanMatcherTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ExpectExtraTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

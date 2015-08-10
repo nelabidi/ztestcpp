@@ -33,14 +33,14 @@ namespace ztest {
         void toBeNull()
         {
             _result = _actual == ((void *)0);
-            applyNot(_result);
+            _result = applyNot(_result);
             throwException("teBeNull", "Not null");
         }
 
         void toBeNotNull()
         {
             _result = _actual != ((void *)0);
-            applyNot(_result);
+            _result = applyNot(_result);
             throwException("toBeNotNull", "is null");
         }
 
