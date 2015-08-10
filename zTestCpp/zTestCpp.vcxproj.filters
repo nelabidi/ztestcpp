@@ -60,6 +60,9 @@
     <ClInclude Include="TestResults.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="matchers\BooleanMatcher.h">
+      <Filter>Matchers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

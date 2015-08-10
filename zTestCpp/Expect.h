@@ -15,6 +15,7 @@
 
 #include "matchers/Matcher.h"
 #include "matchers/PointerMatcher.h"
+#include "matchers/BooleanMatcher.h"
 
 
 //expect macro helper
