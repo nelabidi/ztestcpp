@@ -32,6 +32,13 @@ namespace {
         }
     };
 
+    xdescribe("XTestSuiteRegistration")
+    {
+        it("Should NOT find this testSuite")
+        {
+        }
+    };
+
     int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
 
     describe("TestSuiteRunner")
@@ -83,17 +90,25 @@ void TestSuiteRegistrationTest()
 
 
     using namespace ztest;
-    bool testSuiteFound = false;
+    bool testSuiteFound = false, xtestSuiteFound = false;
 
     //should find TestSuiteRegistration
     TestSuiteRunnerList runners;
     TestRunner::getAllRunners(runners);
-    for (unsigned i = 0; i < runners.size() && !testSuiteFound; i++)
+    for (unsigned i = 0; i < runners.size(); i++)
     {
-        testSuiteFound = runners[i]->getName() == "TestSuiteRegistration";
+        if (runners[i]->getName() == "TestSuiteRegistration")
+        {
+            testSuiteFound = true;
+        }
+        if (runners[i]->getName() == "XTestSuiteRegistration")
+        {
+            xtestSuiteFound = true;
+        }
     }
 
     ASSERT_TEST(testSuiteFound, "TestSuiteRegistration: should find a testSuite");
+    ASSERT_TEST(!xtestSuiteFound, "TestSuiteRegistration: should not find a testSuite");
 
 }
 
