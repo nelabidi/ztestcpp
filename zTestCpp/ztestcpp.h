@@ -105,6 +105,7 @@ struct testSuiteId;\
 static ztest::TestSuiteRegistrar<testSuiteId> GENERATE_UNIQUE_ID(TestSuiteRegistrar)(testSuiteName, __FILE__, __LINE__);\
 struct testSuiteId : public ztest::TestSuiteBase<testSuiteId>
 
+
 #define TESTCASE_REGISTRATION(testCaseId,testCaseName)\
 struct XCONCAT(testCaseId,  reg) {\
     XCONCAT(testCaseId , reg )() \
@@ -121,6 +122,29 @@ TESTSUITE_REGISTRATION(GENERATE_UNIQUE_ID(TestSuite), testSuiteName)
 
 #define it(testCaseName) \
 TESTCASE_REGISTRATION(GENERATE_UNIQUE_ID(testCase), testCaseName)
+
+//Exclude macros
+
+#define XTESTSUITE_REGISTRATION(testSuiteId,testSuiteName)\
+struct testSuiteId;\
+struct testSuiteId : public ztest::TestSuiteBase<testSuiteId>
+
+
+#define XTESTCASE_REGISTRATION(testCaseId,testCaseName)\
+struct XCONCAT(testCaseId,  reg) {\
+    XCONCAT(testCaseId , reg )() \
+    { \
+    } \
+} XCONCAT(testCaseId, reg);\
+void testCaseId()
+
+// xdescribe macro, exclude test suite
+#define xdescribe(testSuiteName) \
+XTESTSUITE_REGISTRATION(GENERATE_UNIQUE_ID(TestSuite), testSuiteName)
+
+// xit macro, exclude spec
+#define xit(testCaseName) \
+XTESTCASE_REGISTRATION(GENERATE_UNIQUE_ID(testCase), testCaseName)
 
 
 //forward declaration
