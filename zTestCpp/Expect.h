@@ -16,6 +16,7 @@
 #include "matchers/Matcher.h"
 #include "matchers/PointerMatcher.h"
 #include "matchers/BooleanMatcher.h"
+#include "matchers/StringMatcher.h"
 
 
 //expect macro helper
@@ -36,10 +37,17 @@ namespace ztest {
     //Expect,  matchers factory
 
     template<typename actualType>
-    static Matcher<actualType>
+    inline Matcher<actualType>
     Expect(actualType actual, const char *file = nullptr, int line = 0)
     {
         return Matcher<actualType>(actual, file, line);
+    }
+
+    //overload for Capture
+    inline Matcher<std::string>
+    Expect(const Capture& capture, const char *file = nullptr, int line = 0)
+    {
+        return Matcher<std::string>(capture.get(), file, line);
     }
 
 }// end namespace ztest

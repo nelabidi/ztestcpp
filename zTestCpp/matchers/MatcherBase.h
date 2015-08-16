@@ -41,6 +41,11 @@ namespace ztest {
             }
         }
 
+        void throwException(const char * from, std::string& message)
+        {
+            throwException(from, message.c_str());
+        }
+
 
 
     protected:

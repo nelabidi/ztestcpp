@@ -73,6 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Capture.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Expect.h" />

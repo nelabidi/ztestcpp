@@ -63,6 +63,9 @@
     <ClInclude Include="matchers\BooleanMatcher.h">
       <Filter>Matchers</Filter>
     </ClInclude>
+    <ClInclude Include="Capture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -158,6 +158,7 @@ namespace ztest {
 
 
 #include "Console.h"
+#include "Capture.h"
 #include "Expect.h"
 #include "TestResults.h"
 #include "TestSuite.h"
@@ -165,6 +166,7 @@ namespace ztest {
 #include "DefaultOutputer.h"
 
 #include "TestRunner.h"
+
 
 
 

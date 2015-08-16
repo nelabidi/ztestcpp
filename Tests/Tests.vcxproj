@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BooleanMatcherTest.cpp" />
+    <ClCompile Include="CaptureTest.cpp" />
     <ClCompile Include="ExceptionThrowTest.cpp" />
     <ClCompile Include="ExpectBasicTest.cpp" />
     <ClCompile Include="ExpectExtraTest.cpp" />
@@ -96,6 +97,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StringMatcherTest.cpp" />
     <ClCompile Include="TestSuiteDecl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
