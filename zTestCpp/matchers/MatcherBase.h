@@ -13,58 +13,59 @@
 #define MatcherBase_h__
 
 
-namespace ztest {
+namespace ztest
+{
 
-    //matcher declaration
-    template<typename T>
-    struct Matcher;
+//matcher declaration
+template<typename T>
+struct Matcher;
 
 
 
-    struct MatcherBase
+struct MatcherBase
+{
+
+    MatcherBase(const char *file, int line) :
+        _line(line),
+        _file(file),
+        _result(false),
+        _not(false)
+    {}
+
+    void throwException(const char * from, const char *message)
     {
-
-        MatcherBase(const char *file, int line) :
-            _line(line),
-            _file(file),
-            _result(false),
-            _not(false)
-        {}
-
-        void throwException(const char * from, const char *message)
+        if (!_result)
         {
-            if (!_result)
-            {
-                std::string msg(from);
-                msg += " Failed with: " + std::string(message);
-                throw Exception(msg, _file, _line);
-            }
+            std::string msg(from);
+            msg += " Failed with: " + std::string(message);
+            throw Exception(msg, _file, _line);
         }
+    }
 
-        void throwException(const char * from, std::string& message)
-        {
-            throwException(from, message.c_str());
-        }
+    void throwException(const char * from, std::string& message)
+    {
+        throwException(from, message.c_str());
+    }
 
 
 
-    protected:
-        bool applyNot(bool result)
-        {
-            bool retVal = _not ? !result : result;
-            _not = false;
-            return retVal;
-        }
-        void not()
-        {
-            _not = !_not;
-        }
+protected:
+    bool applyNot(bool result)
+    {
+        bool retVal = _not ? !result : result;
+        _not = false;
+        return retVal;
+    }
+    void not()
+    {
+        _not = !_not;
+    }
 
-        bool       _not;
-        const char* _file;
-        int         _line;
-        bool        _result;
-    };
+    bool       _not;
+    const char* _file;
+    int         _line;
+    bool        _result;
+};
 
 
 

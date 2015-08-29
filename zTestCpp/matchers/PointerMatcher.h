@@ -13,44 +13,45 @@
 #define PointerMatcher_h__
 
 
-namespace ztest {
+namespace ztest
+{
 
-    //pointer type matcher partial specialization
+//pointer type matcher partial specialization
 
 
-    template<typename actualType>
-    struct Matcher < actualType * > : public MatcherBaseImp< Matcher < actualType * > >
+template<typename actualType>
+struct Matcher < actualType * > : public MatcherBaseImp< Matcher < actualType * > >
+{
+    typedef  MatcherBaseImp< Matcher < actualType * > > BASE;
+
+    Matcher(actualType* actual, const char *file, int line)
+        : MatcherBaseImp(file, line),
+          _actual(actual)
     {
-        typedef  MatcherBaseImp< Matcher < actualType * > > BASE;
-
-        Matcher(actualType* actual, const char *file, int line)
-            : MatcherBaseImp(file, line),
-              _actual(actual)
-        {
-        }
+    }
 
 
-        void toBeNull()
-        {
-            _result = _actual == ((void *)0);
-            _result = applyNot(_result);
-            throwException("toBeNull", "Not null");
-        }
+    void toBeNull()
+    {
+        _result = _actual == ((void *)0);
+        _result = applyNot(_result);
+        throwException("toBeNull", "Not null");
+    }
 
-        void toBeNotNull()
-        {
-            _result = _actual != ((void *)0);
-            _result = applyNot(_result);
-            throwException("toBeNotNull", "is null");
-        }
+    void toBeNotNull()
+    {
+        _result = _actual != ((void *)0);
+        _result = applyNot(_result);
+        throwException("toBeNotNull", "is null");
+    }
 
 
-    protected:
+protected:
 
-        actualType * _actual;
-        friend BASE;
+    actualType * _actual;
+    friend BASE;
 
-    };
+};
 
 
 

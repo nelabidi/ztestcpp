@@ -32,23 +32,24 @@
     if(!thrown)  throw ztest::Exception("Expected Exception of type '" #type "' not thrown",__FILE__,__LINE__);\
 }
 
-namespace ztest {
+namespace ztest
+{
 
-    //Expect,  matchers factory
+//Expect,  matchers factory
 
-    template<typename actualType>
-    inline Matcher<actualType>
-    Expect(actualType actual, const char *file = nullptr, int line = 0)
-    {
-        return Matcher<actualType>(actual, file, line);
-    }
+template<typename actualType>
+inline Matcher<actualType>
+Expect(actualType actual, const char *file = nullptr, int line = 0)
+{
+    return Matcher<actualType>(actual, file, line);
+}
 
-    //overload for Capture
-    inline Matcher<std::string>
-    Expect(const Capture& capture, const char *file = nullptr, int line = 0)
-    {
-        return Matcher<std::string>(capture.get(), file, line);
-    }
+//overload for Capture
+inline Matcher<std::string>
+Expect(const Capture& capture, const char *file = nullptr, int line = 0)
+{
+    return Matcher<std::string>(capture.get(), file, line);
+}
 
 }// end namespace ztest
 

@@ -14,32 +14,33 @@
 #define Capture_h__
 
 
-namespace ztest {
+namespace ztest
+{
 
 
-    struct Capture
+struct Capture
+{
+    Capture(std::ostream& o)
+        : _target(o)
     {
-        Capture(std::ostream& o)
-            : _target(o)
-        {
-            _stringstream << "";
-            _oldbuf = _target.rdbuf(_stringstream.rdbuf());
-        }
-        std::string get() const
-        {
-            return _stringstream.str();
-        }
+        _stringstream << "";
+        _oldbuf = _target.rdbuf(_stringstream.rdbuf());
+    }
+    std::string get() const
+    {
+        return _stringstream.str();
+    }
 
-        ~Capture()
-        {
-            _target.rdbuf(_oldbuf);
-        }
+    ~Capture()
+    {
+        _target.rdbuf(_oldbuf);
+    }
 
-    private:
-        std::ostream&   _target;
-        std::streambuf*  _oldbuf;
-        std::stringstream _stringstream;
-    };
+private:
+    std::ostream&   _target;
+    std::streambuf*  _oldbuf;
+    std::stringstream _stringstream;
+};
 
 
 

@@ -12,32 +12,33 @@
 #include <ztestcpp.h>
 
 
-namespace {
+namespace
+{
 
 
-    describe("BooleanMatcher")
+describe("BooleanMatcher")
+{
+
+    int return10()
     {
+        return 10;
+    }
 
-        int return10()
-        {
-            return 10;
-        }
+    it("implemnent toBeTrue")
+    {
+        expect(true).toBeTrue();
+    }
+    it("implemnent toBeFalse")
+    {
+        expect(false).toBeFalse();
+    }
 
-        it("implemnent toBeTrue")
-        {
-            expect(true).toBeTrue();
-        }
-        it("implemnent toBeFalse")
-        {
-            expect(false).toBeFalse();
-        }
+    it("can be used to check an expression if it's true")
+    {
+        expect((return10() < 100) && return10() > 5 ).toBeTrue();
+    }
 
-        it("can be used to check an expression if it's true")
-        {
-            expect((return10() < 100) && return10() > 5 ).toBeTrue();
-        }
-
-    };
+};
 
 
 

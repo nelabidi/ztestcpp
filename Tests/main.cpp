@@ -15,72 +15,73 @@
 using namespace std;
 
 //anonymous namespace are very important to avoid collisions
-namespace {
+namespace
+{
 
-    describe("TestSuite 2")
+describe("TestSuite 2")
+{
+    it("I want to sleep, please!")
     {
-        it("I want to sleep, please!")
-        {
-            // YES, I Know :)
-        }
-    };
+        // YES, I Know :)
+    }
+};
 
-    describe("TestSuiteRegistration")
+describe("TestSuiteRegistration")
+{
+    it("Should find this testSuite")
     {
-        it("Should find this testSuite")
-        {
-        }
-    };
+    }
+};
 
-    xdescribe("XTestSuiteRegistration")
+xdescribe("XTestSuiteRegistration")
+{
+    it("Should NOT find this testSuite")
     {
-        it("Should NOT find this testSuite")
-        {
-        }
-    };
+    }
+};
 
-    int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
+int setupCalls = 0, tearDownCalls = 0, beforeEachCalls = 0, afterEachCalls = 0;
 
-    describe("TestSuiteRunner")
+describe("TestSuiteRunner")
+{
+    bool setupcalled, beforeEachCalled, afterEachCalled;
+    void setUp()
     {
-        bool setupcalled, beforeEachCalled, afterEachCalled;
-        void setUp()
-        {
-            setupCalls++;
-            setupcalled = true;
-        }
-        void tearDown()
-        {
-            tearDownCalls++;
-        }
-        void beforeEach()
-        {
-            beforeEachCalls++;
-            beforeEachCalled = true;
-        }
-        void afterEach()
-        {
-            afterEachCalls++;
-            afterEachCalled = true;
-        }
+        setupCalls++;
+        setupcalled = true;
+    }
+    void tearDown()
+    {
+        tearDownCalls++;
+    }
+    void beforeEach()
+    {
+        beforeEachCalls++;
+        beforeEachCalled = true;
+    }
+    void afterEach()
+    {
+        afterEachCalls++;
+        afterEachCalled = true;
+    }
 
-        it("Should call setUp")
-        {
-            ASSERT_TEST(setupcalled, getTestCaseFullName().c_str());
-        }
-        it("Should call tearDown once")
-        {
-        }
-        it("Should call beforEach")
-        {
-            ASSERT_TEST(beforeEachCalled, getTestCaseFullName().c_str());
-        }
-        it("Should call afterEach 3 times")
-        {
-            ASSERT_TEST(afterEachCalls == 3, getTestCaseFullName().c_str());
-        }
+    it("Should call setUp")
+    {
+        ASSERT_TEST(setupcalled, getTestCaseFullName().c_str());
+    }
+    it("Should call tearDown once")
+    {
+    }
+    it("Should call beforEach")
+    {
+        ASSERT_TEST(beforeEachCalled, getTestCaseFullName().c_str());
+    }
+    it("Should call afterEach 3 times")
+    {
+        ASSERT_TEST(afterEachCalls == 3, getTestCaseFullName().c_str());
+    }
 
-    };
+};
 
 }
 

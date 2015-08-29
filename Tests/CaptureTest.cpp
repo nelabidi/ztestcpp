@@ -14,20 +14,21 @@
 #include <ztestcpp.h>
 
 
-namespace {
+namespace
+{
 
-    describe("Capture ostream")
+describe("Capture ostream")
+{
+
+    it("capture std::cout")
     {
+        ztest::Capture c(std::cout);
+        std::cout << "Hello";
+        expect(c).toContain("Hello");
 
-        it("capture std::cout")
-        {
-            ztest::Capture c(std::cout);
-            std::cout << "Hello";
-            expect(c).toContain("Hello");
+    }
 
-        }
-
-    };
+};
 
 
 

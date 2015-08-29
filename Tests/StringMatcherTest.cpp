@@ -14,26 +14,27 @@
 #include <ztestcpp.h>
 
 
-namespace {
+namespace
+{
 
 
-    describe("String Matcher Test")
+describe("String Matcher Test")
+{
+    it("implement contains")
     {
-        it("implement contains")
-        {
-            expect("Hello naoufel").toContain("Hello");
+        expect("Hello naoufel").toContain("Hello");
 
-        }
-        it("implement equal/notequal")
-        {
-            expect("Hello").toEqual("Hello");
-            expect("Hello").toBeEqual("Hello");
-            expect("hello").toBeNotEqual("naoufel");
+    }
+    it("implement equal/notequal")
+    {
+        expect("Hello").toEqual("Hello");
+        expect("Hello").toBeEqual("Hello");
+        expect("hello").toBeNotEqual("naoufel");
 
 
-        }
+    }
 
-    };
+};
 
 
 }

@@ -12,42 +12,43 @@
 #include <ztestcpp.h>
 
 
-namespace {
+namespace
+{
 
-    describe("Expect outside of a test case")
+describe("Expect outside of a test case")
+{
+
+    //use Expect in setup/before
+    void setUp()
     {
+        void * p = 0;
+        expect(p).toBeNull();
 
-        //use Expect in setup/before
-        void setUp()
-        {
-            void * p = 0;
-            expect(p).toBeNull();
+    }
+    void tearDown()
+    {
+        void * p = 0;
+        expect(p).toBeNull();
 
-        }
-        void tearDown()
-        {
-            void * p = 0;
-            expect(p).toBeNull();
+    }
+    void beforeEach()
+    {
+        bool b = true;
+        expect(b).not().toBeFalse();
 
-        }
-        void beforeEach()
-        {
-            bool b = true;
-            expect(b).not().toBeFalse();
+    }
+    void afterEach()
+    {
+        void * p = 0;
+        expect(p).not().toBeNotNull();
 
-        }
-        void afterEach()
-        {
-            void * p = 0;
-            expect(p).not().toBeNotNull();
+    }
 
-        }
-
-        it("a test case with expect")
-        {
-            expect(true).toBeTrue();
-        }
-    };
+    it("a test case with expect")
+    {
+        expect(true).toBeTrue();
+    }
+};
 
 
 
